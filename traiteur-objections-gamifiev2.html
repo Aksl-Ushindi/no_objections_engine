@@ -1,0 +1,2003 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N.O.E. | INTERFACE by Ushindi.io</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #009688;
+            --dark-green: #00695C;
+            --black: #000000;
+            --white: #FFFFFF;
+            --light-bg: #F8F9FA;
+            --text-dark: #212529;
+            --text-muted: #6C757D;
+            --border-light: #DEE2E6;
+            --success: #28A745;
+            --warning: #FFC107;
+            --gradient-primary: linear-gradient(135deg, #009688 0%, #00695C 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ÉCRAN D'ACCUEIL PLEIN ÉCRAN */
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #009688 0%, #00695C 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            color: white;
+            text-align: center;
+        }
+
+        .welcome-screen.hidden {
+            display: none;
+        }
+
+        .banner-image {
+            width: 400px;
+            max-width: 80vw;
+            height: auto;
+            margin-bottom: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 50px;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+
+        .start-btn {
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: white;
+            color: var(--primary-green);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* ÉCRANS DE TRANSITION */
+        .transition-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #009688 0%, #00695C 100%);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            color: white;
+            text-align: center;
+        }
+
+        .transition-screen.show {
+            display: flex;
+        }
+
+        .transition-mascotte {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin-bottom: 30px;
+            animation: bounce 1s infinite;
+        }
+
+        .transition-message {
+            font-size: 1.8rem;
+            font-weight: 600;
+            max-width: 600px;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-20px);
+            }
+
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* ÉCRAN DE CHARGEMENT */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #009688 0%, #00695C 100%);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            color: white;
+            text-align: center;
+        }
+
+        .loading-screen.show {
+            display: flex;
+        }
+
+        .loading-mascotte {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 40px;
+            animation: rotate 2s linear infinite;
+        }
+
+        .loading-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .loading-message {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .progress-bar-container {
+            width: 400px;
+            max-width: 80vw;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: white;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .loading-status {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* INTERFACE PRINCIPALE */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* MASCOTTE ACCOMPAGNATRICE */
+        .companion-mascotte {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            z-index: 100;
+            transition: all 0.5s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(-50%) translateX(0);
+            }
+
+            50% {
+                transform: translateY(-50%) translateX(10px);
+            }
+        }
+
+        /* Header avec logo et avatar */
+        .header {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-circle {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            box-shadow: 0 4px 16px rgba(0, 150, 136, 0.3);
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--black);
+            letter-spacing: -0.5px;
+        }
+
+        .crown {
+            width: 24px;
+            height: 24px;
+            fill: var(--white);
+        }
+
+        .avatar-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-green);
+            object-fit: cover;
+        }
+
+        .profile-info h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 5px;
+        }
+
+        .profile-info p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* Progress bar */
+        .progress-container {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .progress-title {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .progress-percentage {
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+
+        .progress-track {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .progress-step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--text-muted);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active {
+            background: var(--primary-green);
+            color: var(--white);
+            box-shadow: 0 0 0 4px rgba(0, 150, 136, 0.2);
+        }
+
+        .progress-step.completed {
+            background: var(--primary-green);
+            color: var(--white);
+        }
+
+        .progress-step::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 40px;
+            height: 2px;
+            background: var(--border-light);
+            transform: translateY(-50%);
+            transition: all 0.3s ease;
+        }
+
+        .progress-step:last-child::after {
+            display: none;
+        }
+
+        .progress-step.active::after,
+        .progress-step.completed::after {
+            background: var(--primary-green);
+        }
+
+        .progress-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        /* Card principale */
+        .main-card {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Étapes */
+        .step {
+            padding: 40px;
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .step-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .step-number {
+            width: 35px;
+            height: 35px;
+            background: var(--gradient-primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 15px;
+            font-size: 16px;
+        }
+
+        .step-subtitle {
+            color: var(--text-muted);
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        /* Formulaires */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        select,
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-light);
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            background: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        select:focus,
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(0, 150, 136, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Options radio/checkbox */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .radio-option,
+        .checkbox-option {
+            padding: 15px 20px;
+            border: 2px solid var(--border-light);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--white);
+            position: relative;
+        }
+
+        .radio-option:hover,
+        .checkbox-option:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 150, 136, 0.1);
+        }
+
+        .radio-option.selected,
+        .checkbox-option.selected {
+            border-color: var(--primary-green);
+            background: rgba(0, 150, 136, 0.05);
+        }
+
+        .radio-option input,
+        .checkbox-option input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .option-title {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .option-description {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Boutons */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--gradient-primary);
+            color: var(--white);
+            box-shadow: 0 4px 16px rgba(0, 150, 136, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 150, 136, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--text-dark);
+            border: 2px solid var(--border-light);
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary-green);
+            color: var(--primary-green);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn-group .btn {
+            flex: 1;
+            max-width: 150px;
+        }
+
+        /* Champs conditionnels */
+        .conditional-field {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+
+        .conditional-field.show {
+            max-height: 500px;
+            opacity: 1;
+            margin-top: 20px;
+        }
+
+        /* Étape finale */
+        .result-container {
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 24px rgba(0, 150, 136, 0.3);
+        }
+
+        .prompt-container {
+            background: var(--light-bg);
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .prompt-text {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .copy-btn {
+            background: var(--success);
+            margin-top: 15px;
+        }
+
+        .copy-btn.copied {
+            background: var(--warning);
+        }
+
+        /* Notification d'erreur */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: var(--warning);
+            color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            display: none;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .notification.show {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .step {
+                padding: 30px 20px;
+            }
+
+            .welcome-title {
+                font-size: 2.5rem;
+            }
+
+            .companion-mascotte {
+                width: 80px;
+                height: 80px;
+                right: 10px;
+            }
+
+            .banner-image {
+                width: 300px;
+            }
+        }
+
+        /* Boutons allongés */
+        .btn-group .btn {
+            flex: 1;
+            max-width: none;
+            min-width: 180px;
+            font-size: 1.1rem;
+            padding: 16px 0;
+        }
+
+        /* Effet futuriste pour NO OBJECTIONS ENGINE */
+        .btn-futuristic {
+            background: linear-gradient(90deg, #00ffe7 0%, #009688 100%);
+            color: #222;
+            font-weight: 700;
+            letter-spacing: 2px;
+            box-shadow: 0 0 20px #00ffe7, 0 0 40px #009688;
+            border: 2px solid #00ffe7;
+            text-transform: uppercase;
+            transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-futuristic:hover {
+            background: linear-gradient(90deg, #009688 0%, #00ffe7 100%);
+            color: #fff;
+            box-shadow: 0 0 40px #00ffe7, 0 0 60px #009688;
+            border-color: #009688;
+            transform: scale(1.05);
+        }
+
+        .btn-futuristic::after {
+            content: '';
+            position: absolute;
+            left: -50%;
+            top: 0;
+            width: 200%;
+            height: 100%;
+            background: rgba(0, 255, 231, 0.08);
+            transform: skewX(-20deg);
+            transition: left 0.5s;
+            z-index: 0;
+        }
+
+        .btn-futuristic:hover::after {
+            left: 0;
+        }
+
+        .btn-futuristic span {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ÉCRAN D'ACCUEIL PLEIN ÉCRAN -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <img src="banner t-o.png" alt="Banner Traiteur d'objections" class="banner-image">
+        <h1 class="welcome-title">NO OBJECTIONS ENGINE</h1>
+        <p class="welcome-subtitle">Supprime tes blocages. Vends plus vite. Conclus maintenant.</p>
+        <button class="start-btn" onclick="startApp()">JE DIS OUI !</button>
+    </div>
+
+    <!-- ÉCRANS DE TRANSITION -->
+    <div class="transition-screen" id="transitionScreen">
+        <img src="mascotte_accueil.png" alt="Mascotte" class="transition-mascotte" id="transitionMascotte">
+        <p class="transition-message" id="transitionMessage"></p>
+    </div>
+
+    <!-- ÉCRAN DE CHARGEMENT -->
+    <div class="loading-screen" id="loadingScreen">
+        <img src="mascotte_finale.png" alt="Mascotte réflexion" class="loading-mascotte">
+        <h2 class="loading-title">Génération en cours...</h2>
+        <p class="loading-message" id="loadingMessage">Analyse de vos réponses...</p>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <p class="loading-status" id="loadingStatus">0%</p>
+    </div>
+
+    <!-- NOTIFICATION D'ERREUR -->
+    <div class="notification" id="notification"></div>
+
+    <!-- MASCOTTE ACCOMPAGNATRICE -->
+    <img src="mascotte_accueil.png" alt="Mascotte" class="companion-mascotte" id="companionMascotte">
+
+    <!-- INTERFACE PRINCIPALE -->
+    <div class="container" id="mainContainer" style="display: none;">
+        <!-- Header avec logo et avatar -->
+        <div class="header">
+            <div class="logo">
+                <div class="logo-circle">
+                    <svg class="crown" viewBox="0 0 24 24">
+                        <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" />
+                    </svg>
+                </div>
+                <span class="logo-text">Ushindi.io</span>
+            </div>
+
+            <div class="avatar-container">
+                <img src="avatar.png" alt="Avatar" class="avatar">
+                <div class="profile-info">
+                    <h3>Assistant Expert</h3>
+                    <p>Spécialiste en traitement d'objections</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Barre de progression -->
+        <div class="progress-container">
+            <div class="progress-text">
+                <span class="progress-title">Progression</span>
+                <span class="progress-percentage" id="progressPercentage">0%</span>
+            </div>
+
+            <div class="progress-track">
+                <div class="progress-step active" data-step="1">1</div>
+                <div class="progress-step" data-step="2">2</div>
+                <div class="progress-step" data-step="3">3</div>
+                <div class="progress-step" data-step="4">4</div>
+                <div class="progress-step" data-step="5">5</div>
+            </div>
+
+            <div class="progress-label" id="progressLabel">Contexte général</div>
+        </div>
+
+        <!-- Carte principale avec les étapes -->
+        <div class="main-card">
+            <!-- Étape 1: Contexte général -->
+            <div class="step active" id="step-1">
+                <div class="step-title">
+                    <div class="step-number">1</div>
+                    Contexte général
+                </div>
+                <p class="step-subtitle">Êtes-vous confronté à une objection réelle ou préparez-vous une phase de
+                    prospection ?</p>
+
+                <div class="options-grid">
+                    <div class="radio-option" onclick="selectRadio('contextType', 'objection')">
+                        <input type="radio" name="contextType" value="objection">
+                        <div class="option-title">🚫 Je fais face à une objection actuelle</div>
+                        <div class="option-description">Vous êtes en train de gérer une objection dans une conversation
+                            commerciale</div>
+                    </div>
+
+                    <div class="radio-option" onclick="selectRadio('contextType', 'prospection')">
+                        <input type="radio" name="contextType" value="prospection">
+                        <div class="option-title">📋 Je prépare une phase de prospection</div>
+                        <div class="option-description">Vous préparez un script ou une approche pour anticiper les
+                            objections</div>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="prevStep()" style="visibility: hidden;">Retour</button>
+                    <button class="btn" onclick="nextStep()" id="step1-next">Continuer</button>
+                </div>
+            </div>
+
+            <!-- Étape 2: Nature de l'objection (combinée) -->
+            <div class="step" id="step-2">
+                <div class="step-title">
+                    <div class="step-number">2</div>
+                    Nature de l'objection
+                </div>
+                <p class="step-subtitle" id="step2-subtitle">Décrivez votre situation et sélectionnez les types
+                    d'objections pertinents</p>
+
+                <!-- Phase de texte -->
+                <div class="form-group">
+                    <label for="objectionDescription" id="objectionDescriptionLabel">Décrivez l'objection que vous
+                        rencontrez :</label>
+                    <textarea id="objectionDescription" name="objectionDescription"
+                        placeholder="Décrivez précisément l'objection ou la situation que vous rencontrez..."></textarea>
+                </div>
+
+                <!-- Grille de choix multiples -->
+                <div class="form-group">
+                    <label>Quels thèmes d'objections vous redoutez de rencontrer ou correspondent bien à votre situation
+                        :</label>
+                    <div class="options-grid">
+                        <div class="checkbox-option" onclick="toggleCheckbox('objectionTypes', 'prix')">
+                            <input type="checkbox" name="objectionTypes" value="prix">
+                            <div class="option-title">💰 Prix</div>
+                            <div class="option-description">"C'est trop cher", "Le budget n'est pas disponible", "Vos
+                                concurrents sont moins chers"</div>
+                        </div>
+
+                        <div class="checkbox-option" onclick="toggleCheckbox('objectionTypes', 'delai')">
+                            <input type="checkbox" name="objectionTypes" value="delai">
+                            <div class="option-title">⏰ Délai</div>
+                            <div class="option-description">"Ce n'est pas le bon moment", "Il faut attendre", "On va
+                                réfléchir"</div>
+                        </div>
+
+                        <div class="checkbox-option" onclick="toggleCheckbox('objectionTypes', 'confiance')">
+                            <input type="checkbox" name="objectionTypes" value="confiance">
+                            <div class="option-title">🤝 Manque de confiance</div>
+                            <div class="option-description">"On ne vous connaît pas", "Vos références ne nous
+                                convainquent pas", "Et si ça ne marche pas ?"</div>
+                        </div>
+
+                        <div class="checkbox-option" onclick="toggleCheckbox('objectionTypes', 'besoin')">
+                            <input type="checkbox" name="objectionTypes" value="besoin">
+                            <div class="option-title">❓ Besoin flou</div>
+                            <div class="option-description">"Je ne vois pas l'intérêt", "Ça ne correspond pas à nos
+                                besoins", "On n'a pas besoin de ça"</div>
+                        </div>
+
+                        <div class="checkbox-option" onclick="toggleCheckbox('objectionTypes', 'autorite')">
+                            <input type="checkbox" name="objectionTypes" value="autorite">
+                            <div class="option-title">👤 Manque d'autorité</div>
+                            <div class="option-description">"Ce n'est pas moi qui décide", "Je dois en parler à mon
+                                supérieur", "Je ne suis pas le bon interlocuteur"</div>
+                        </div>
+
+                        <div class="checkbox-option" onclick="toggleCheckbox('objectionTypes', 'urgence')">
+                            <input type="checkbox" name="objectionTypes" value="urgence">
+                            <div class="option-title">⏱️ Absence d'urgence</div>
+                            <div class="option-description">"On n'est pas pressé", "On verra ça plus tard", "Ce n'est
+                                pas une priorité pour le moment"</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group conditional-field" id="otherObjectionField">
+                    <label for="otherObjection">Autre type d'objection (optionnel) :</label>
+                    <input type="text" id="otherObjection" name="otherObjection"
+                        placeholder="Décrivez un autre type d'objection">
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="prevStep()">Retour</button>
+                    <button class="btn" onclick="nextStep()" id="step2-next">Continuer</button>
+                </div>
+            </div>
+
+            <!-- Étape 3: Contexte de l'interaction -->
+            <div class="step" id="step-3">
+                <div class="step-title">
+                    <div class="step-number">3</div>
+                    Contexte de l'interaction
+                </div>
+                <p class="step-subtitle" id="step3-subtitle">Décrivez le contexte dans lequel cette objection survient
+                    ou pourrait survenir</p>
+
+                <div class="form-group">
+                    <label for="channel">Par quel canal vous communiquez ?</label>
+                    <select id="channel" name="channel" required>
+                        <option value="">Sélectionnez le canal</option>
+                        <option value="telephone">Téléphone</option>
+                        <option value="email">Email</option>
+                        <option value="visio">Visioconférence</option>
+                        <option value="personne">En personne</option>
+                        <option value="chat">SMS ou Réseaux Sociaux</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="prospectAuthority">Niveau d'autorité de votre interlocuteur :</label>
+                    <select id="prospectAuthority" name="prospectAuthority" required>
+                        <option value="">Sélectionnez le niveau</option>
+                        <option value="eleve">Élevé (peut décider seul)</option>
+                        <option value="moyen">Moyen (influence la décision)</option>
+                        <option value="bas">Bas (simple informateur)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="phase">À quelle phase du cycle de vente êtes-vous ?</label>
+                    <select id="phase" name="phase" required>
+                        <option value="">Sélectionnez la phase</option>
+                        <option value="prise-contact">Prise de contact</option>
+                        <option value="presentation">Présentation</option>
+                        <option value="negociation">Négociation</option>
+                        <option value="closing">Closing</option>
+                        <option value="relance">Relance</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="prospectRole">Quel rôle joue votre interlocuteur ?</label>
+                    <select id="prospectRole" name="prospectRole" required>
+                        <option value="">Sélectionnez le rôle</option>
+                        <option value="decideur">Décideur Unique | Final</option>
+                        <option value="influenceur">Influenceur | Conseiller important</option>
+                        <option value="autre">Autre | Inconnu</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="prospectTemperature">Comment qualifieriez-vous ce prospect ?</label>
+                    <select id="prospectTemperature" name="prospectTemperature" required>
+                        <option value="">Sélectionnez la qualification</option>
+                        <option value="froid">Prospect froid</option>
+                        <option value="tiede">Prospect tiède</option>
+                        <option value="chaud">Prospect chaud</option>
+                    </select>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="prevStep()">Retour</button>
+                    <button class="btn" onclick="nextStep()">Continuer</button>
+                </div>
+            </div>
+
+            <!-- Étape 4: Intention stratégique (adaptative) -->
+            <div class="step" id="step-4">
+                <div class="step-title">
+                    <div class="step-number">4</div>
+                    <span id="step4-title">Intention stratégique</span>
+                </div>
+                <p class="step-subtitle" id="step4-subtitle">Quelle est votre intention principale face à cette
+                    objection ?</p>
+
+                <!-- Contenu pour "Je fais face à une objection actuelle" -->
+                <div id="objectionPathContent">
+                    <!-- Phase de rédaction -->
+                    <div class="form-group">
+                        <label for="responseDraft">Rédigez votre plan d'action</label>
+                        <textarea id="responseDraft" name="responseDraft"
+                            placeholder="Décrivez, avec vos mots, ce que vous aimeriez bien répondre ou ce que vous aimeriez faire comprendre a votre prospect..."></textarea>
+                    </div>
+
+                    <!-- Phase de sélection de stratégies -->
+                    <div class="form-group">
+                        <label>Sélectionnez les stratégies que vous souhaitez utiliser :</label>
+                        <div class="options-grid">
+                            <div class="checkbox-option" onclick="toggleCheckbox('strategies', 'desamorcer')">
+                                <input type="checkbox" name="strategies" value="desamorcer">
+                                <div class="option-title">🕊️ Désamorcer calmement</div>
+                                <div class="option-description">Apaiser l'objection et maintenir le dialogue sans
+                                    confrontation</div>
+                            </div>
+
+                            <div class="checkbox-option" onclick="toggleCheckbox('strategies', 'reformuler')">
+                                <input type="checkbox" name="strategies" value="reformuler">
+                                <div class="option-title">🔍 Reformuler pour mieux comprendre</div>
+                                <div class="option-description">Comprendre le véritable enjeu derrière l'objection</div>
+                            </div>
+
+                            <div class="checkbox-option" onclick="toggleCheckbox('strategies', 'contre-argumenter')">
+                                <input type="checkbox" name="strategies" value="contre-argumenter">
+                                <div class="option-title">⚡ Contre-argumenter efficacement</div>
+                                <div class="option-description">Apporter des preuves et arguments pour surmonter
+                                    l'objection</div>
+                            </div>
+
+                            <div class="checkbox-option" onclick="toggleCheckbox('strategies', 'diagnostiquer')">
+                                <input type="checkbox" name="strategies" value="diagnostiquer">
+                                <div class="option-title">🩺 Diagnostiquer la cause racine</div>
+                                <div class="option-description">Identifier la véritable cause et proposer une solution
+                                    adaptée</div>
+                            </div>
+
+                            <div class="checkbox-option" onclick="toggleCheckbox('strategies', 'relational')">
+                                <input type="checkbox" name="strategies" value="relational">
+                                <div class="option-title">🤝 Renforcer la relation</div>
+                                <div class="option-description">Construire la confiance et le lien avec le prospect
+                                </div>
+                            </div>
+
+                            <div class="checkbox-option" onclick="toggleCheckbox('strategies', 'urgent')">
+                                <input type="checkbox" name="strategies" value="urgent">
+                                <div class="option-title">⏰ Créer un sentiment d'urgence</div>
+                                <div class="option-description">Montrer pourquoi une action rapide est nécessaire</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contenu pour "Je prépare une phase de prospection" -->
+                <div id="prospectionPathContent" style="display: none;">
+                    <div class="form-group">
+                        <label for="prospectionScript">Éxpliquez votre stratégie de prospection:</label>
+                        <textarea id="prospectionScript" name="prospectionScript"
+                            placeholder="Éxpliquez votre stratégie de prospection, votre message d'approche, fil rouge ou pitch commercial..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Quels sont les 1 ou 2 objectifs pricipaux de cette stratégie ?</label>
+                        <div class="options-grid">
+                            <div class="radio-option" onclick="selectRadio('prospectionGoal', 'rdv')">
+                                <input type="radio" name="prospectionGoal" value="rdv">
+                                <div class="option-title">📅 Obtenir un rendez-vous</div>
+                                <div class="option-description">Le but principal est de fixer un rendez-vous pour
+                                    présenter l'offre</div>
+                            </div>
+
+                            <div class="radio-option" onclick="selectRadio('prospectionGoal', 'info')">
+                                <input type="radio" name="prospectionGoal" value="info">
+                                <div class="option-title">📊 Fournir des informations</div>
+                                <div class="option-description">Partager des informations pour susciter l'intérêt</div>
+                            </div>
+
+                            <div class="radio-option" onclick="selectRadio('prospectionGoal', 'demo')">
+                                <input type="radio" name="prospectionGoal" value="demo">
+                                <div class="option-title">🎯 Obtenir une démonstration</div>
+                                <div class="option-description">Convaincre le prospect d'assister à une démo</div>
+                            </div>
+
+                            <div class="radio-option" onclick="selectRadio('prospectionGoal', 'vente')">
+                                <input type="radio" name="prospectionGoal" value="vente">
+                                <div class="option-title">💰 Conclure une vente directe</div>
+                                <div class="option-description">Vendre directement via ce premier contact</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="prevStep()">Retour</button>
+                    <button class="btn" onclick="generatePrompt()">Générer le prompt</button>
+                </div>
+            </div>
+
+            <!-- Étape 5: Résultat final -->
+            <div class="step" id="step-5">
+                <div class="result-container">
+                    <div class="success-icon">
+                        <svg width="40" height="40" fill="white" viewBox="0 0 24 24">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h2 class="step-title" style="justify-content: center; margin-bottom: 20px;">
+                        <strong>Votre plan anti-objections est prêt suivez ces 3 étapes</strong>
+                    </h2>
+                    <p class="step-subtitle"><br> 1️⃣👉Chargez votre configuration <br> 2️⃣👉Cliquez sur le bouton "NO OBJECTIONS
+                        ENGINE" <br>3️⃣👉Collez-tout et commencez à travailler </p>
+
+                    <!-- Résumé des choix -->
+                    <div
+                        style="margin-top: 40px; padding: 20px; background: var(--light-bg); border-radius: 15px; text-align: left;">
+                        <h3 style="margin-bottom: 15px; color: var(--primary-green);">📊 Résumé de votre configuration
+                        </h3>
+                        <div id="summary-content">
+                            <!-- Le résumé sera généré ici -->
+                        </div>
+                    </div>
+
+                    <div class="btn-group" style="margin-top: 30px;">
+                        <button class="btn copy-btn" id="copyPromptBtn" onclick="copyPrompt()">1️⃣ Charger configuration</button>
+                        <a href="https://chatgpt.com/g/g-689526a65fb881919cd9591e5fee2f71-no-objections-engine"
+                            target="_blank" class="btn btn-futuristic"><span>2️⃣NO OBJECTIONS ENGINE</span></a>
+                    </div>
+
+<div class="prompt-container" style="display: none;">
+    <div class="prompt-text" id="generated-prompt">
+        <!-- Le prompt sera généré ici -->
+    </div>
+</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let formData = {};
+        const totalSteps = 5;
+
+        // Messages pour les écrans de transition
+        const transitionMessages = {
+            1: "Préparez-vous à définir votre contexte commercial !",
+            2: "Parfait ! Maintenant décrivez votre objection...",
+            3: "Excellent ! Décrivons maintenant le contexte de l'interaction...",
+            4: "Super ! Définissons votre stratégie de réponse...",
+            5: "Génial ! Votre prompt personnalisé arrive..."
+        };
+
+        // Mascottes pour chaque étape
+        const stepMascottes = {
+            1: "mascotte_reflexion.png",
+            2: "mascotte_aide.png",
+            3: "mascotte_validation.png",
+            4: "mascotte_accueil.png"
+        };
+
+        // Messages de chargement
+        const loadingMessages = [
+            "Analyse de vos réponses...",
+            "Calcul des meilleures stratégies...",
+            "Adaptation du prompt à votre contexte...",
+            "Optimisation des techniques de réponse...",
+            "Finalisation de votre assistant expert..."
+        ];
+
+        // Labels de progression
+        const progressLabels = [
+            "", // Index 0 non utilisé
+            "Contexte général",
+            "Nature de l'objection",
+            "Contexte d'interaction",
+            "Intention stratégique",
+            "Prompt généré"
+        ];
+
+        // Fonction pour afficher une notification d'erreur
+        function showNotification(message, duration = 3000) {
+            const notification = document.getElementById('notification');
+            if (notification) {
+                notification.textContent = message;
+                notification.classList.add('show');
+
+                setTimeout(function () {
+                    notification.classList.remove('show');
+                }, duration);
+            }
+        }
+
+        // Démarrage de l'application
+        function startApp() {
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            const mainContainer = document.getElementById('mainContainer');
+
+            if (welcomeScreen) {
+                welcomeScreen.classList.add('hidden');
+            }
+
+            if (mainContainer) {
+                mainContainer.style.display = 'block';
+            }
+
+            // Passer directement à l'étape 1 avec transition
+            showTransition(1, function () {
+                currentStep = 1;
+                const step1 = document.getElementById('step-1');
+                if (step1) {
+                    step1.classList.add('active');
+                }
+                updateProgress();
+            });
+        }
+
+        // Fonction pour afficher un écran de transition
+        function showTransition(stepNumber, callback) {
+            const transitionScreen = document.getElementById('transitionScreen');
+            const transitionMascotte = document.getElementById('transitionMascotte');
+            const transitionMessage = document.getElementById('transitionMessage');
+
+            if (!transitionScreen || !transitionMascotte || !transitionMessage) {
+                if (callback) callback();
+                return;
+            }
+
+            // Configuration de la mascotte et du message
+            if (stepNumber >= 1 && stepNumber <= 4 && stepMascottes[stepNumber]) {
+                transitionMascotte.src = stepMascottes[stepNumber];
+            } else {
+                transitionMascotte.src = "mascotte_finale.png"; // Mascotte finale pour l'étape 5
+            }
+
+            if (transitionMessages[stepNumber]) {
+                transitionMessage.textContent = transitionMessages[stepNumber];
+            } else {
+                transitionMessage.textContent = "Préparation de votre prompt final...";
+            }
+
+            // Affichage de l'écran de transition
+            transitionScreen.classList.add('show');
+
+            // Masquer après 2.5 secondes et exécuter le callback
+            setTimeout(function () {
+                transitionScreen.classList.remove('show');
+                if (callback) callback();
+            }, 2500);
+        }
+
+        // Fonction pour afficher l'écran de chargement
+        function showLoadingScreen(callback) {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const progressBar = document.getElementById('progressBar');
+            const loadingMessage = document.getElementById('loadingMessage');
+            const loadingStatus = document.getElementById('loadingStatus');
+
+            if (!loadingScreen || !progressBar || !loadingMessage || !loadingStatus) {
+                if (callback) callback();
+                return;
+            }
+
+            loadingScreen.classList.add('show');
+
+            let progress = 0;
+            let messageIndex = 0;
+
+            const loadingInterval = setInterval(function () {
+                progress += Math.random() * 15 + 5; // Progression aléatoire entre 5 et 20%
+
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(loadingInterval);
+
+                    setTimeout(function () {
+                        loadingScreen.classList.remove('show');
+                        if (callback) callback();
+                    }, 500);
+                }
+
+                if (progressBar) {
+                    progressBar.style.width = progress + '%';
+                }
+
+                if (loadingStatus) {
+                    loadingStatus.textContent = Math.round(progress) + '%';
+                }
+
+                // Changer le message toutes les 2 progressions
+                if (Math.round(progress) % 20 === 0 && messageIndex < loadingMessages.length - 1) {
+                    messageIndex++;
+                    if (loadingMessage) {
+                        loadingMessage.textContent = loadingMessages[messageIndex];
+                    }
+                }
+            }, 300);
+        }
+
+        // Mise à jour de la mascotte accompagnatrice
+        function updateCompanionMascotte() {
+            const mascotte = document.getElementById('companionMascotte');
+            if (!mascotte) return;
+
+            if (currentStep >= 1 && currentStep <= 4 && stepMascottes[currentStep]) {
+                mascotte.src = stepMascottes[currentStep];
+                mascotte.style.display = 'block';
+            } else {
+                mascotte.style.display = 'none';
+            }
+        }
+
+        function updateProgress() {
+            // Calcul du pourcentage basé sur les étapes 1-5
+            const percentage = currentStep <= 1 ? 0 : Math.round(((currentStep - 1) / (totalSteps - 1)) * 100);
+            const progressPercentage = document.getElementById('progressPercentage');
+            if (progressPercentage) {
+                progressPercentage.textContent = percentage + '%';
+            }
+
+            // Mise à jour des étapes (les indices de progress-step correspondent maintenant aux étapes 1-5)
+            const progressSteps = document.querySelectorAll('.progress-step');
+            if (progressSteps) {
+                progressSteps.forEach(function (step, index) {
+                    const stepNumber = index + 1; // Les étapes commencent à 1
+                    step.classList.remove('active', 'completed');
+                    if (stepNumber < currentStep) {
+                        step.classList.add('completed');
+                    } else if (stepNumber === currentStep) {
+                        step.classList.add('active');
+                    }
+                });
+            }
+
+            // Mise à jour du label
+            const progressLabel = document.getElementById('progressLabel');
+            if (progressLabel && progressLabels[currentStep]) {
+                progressLabel.textContent = progressLabels[currentStep];
+            }
+
+            updateCompanionMascotte(); // Mettre à jour la mascotte accompagnatrice
+            updateSummary(); // Mettre à jour le résumé des choix
+        }
+
+        function nextStep() {
+            // Validation avant de passer à l'étape suivante
+            if (currentStep === 1 && !validateStep1()) return;
+            if (currentStep === 2 && !validateStep2()) return;
+
+            // Sauvegarder les données de l'étape actuelle
+            saveStepData();
+
+            // Masquer l'étape actuelle
+            const currentStepElement = document.getElementById('step-' + currentStep);
+            if (currentStepElement) {
+                currentStepElement.classList.remove('active');
+            }
+
+            // Si on passe de l'étape 4 à 5, afficher l'écran de chargement
+            if (currentStep === 4) {
+                showLoadingScreen(function () {
+                    currentStep++;
+                    const nextStepElement = document.getElementById('step-' + currentStep);
+                    if (nextStepElement) {
+                        nextStepElement.classList.add('active');
+                    }
+                    updateProgress();
+                });
+            } else {
+                // Pour les autres transitions, utiliser l'écran de transition normal
+                showTransition(currentStep + 1, function () {
+                    currentStep++;
+                    const nextStepElement = document.getElementById('step-' + currentStep);
+                    if (nextStepElement) {
+                        nextStepElement.classList.add('active');
+                    }
+                    updateProgress();
+                });
+            }
+        }
+
+        function prevStep() {
+            if (currentStep <= 1) return;
+
+            // Masquer l'étape actuelle
+            const currentStepElement = document.getElementById('step-' + currentStep);
+            if (currentStepElement) {
+                currentStepElement.classList.remove('active');
+            }
+
+            currentStep--;
+
+            // Afficher l'étape précédente
+            const prevStepElement = document.getElementById('step-' + currentStep);
+            if (prevStepElement) {
+                prevStepElement.classList.add('active');
+            }
+
+            updateProgress();
+        }
+
+        function validateStep1() {
+            const selectedContext = document.querySelector('input[name="contextType"]:checked');
+            if (!selectedContext) {
+                showNotification("Veuillez sélectionner un type de contexte");
+                return false;
+            }
+            return true;
+        }
+
+        function validateStep2() {
+            const description = document.getElementById('objectionDescription').value.trim();
+            if (!description) {
+                showNotification("Veuillez décrire votre situation");
+                return false;
+            }
+
+            const selectedTypes = document.querySelectorAll('input[name="objectionTypes"]:checked');
+            if (selectedTypes.length === 0) {
+                showNotification("Veuillez sélectionner au moins un type d'objection");
+                return false;
+            }
+
+            return true;
+        }
+
+        function saveStepData() {
+            // Sauvegarder les données de l'étape actuelle
+            switch (currentStep) {
+                case 1:
+                    const contextType = document.querySelector('input[name="contextType"]:checked');
+                    if (contextType) {
+                        formData.contextType = contextType.value;
+                        updateStep2Content();
+                    }
+                    break;
+                case 2:
+                    formData.objectionDescription = document.getElementById('objectionDescription').value;
+                    formData.objectionTypes = Array.from(document.querySelectorAll('input[name="objectionTypes"]:checked'))
+                        .map(cb => cb.value);
+                    const otherObjection = document.getElementById('otherObjection');
+                    if (otherObjection && otherObjection.value.trim()) {
+                        formData.otherObjection = otherObjection.value.trim();
+                    }
+                    break;
+                case 3:
+                    formData.channel = document.getElementById('channel').value;
+                    formData.phase = document.getElementById('phase').value;
+                    formData.prospectRole = document.getElementById('prospectRole').value;
+                    formData.prospectAuthority = document.getElementById('prospectAuthority').value;
+                    formData.prospectTemperature = document.getElementById('prospectTemperature').value;
+                    break;
+                case 4:
+                    if (formData.contextType === 'objection') {
+                        formData.responseDraft = document.getElementById('responseDraft').value;
+                        formData.strategies = Array.from(document.querySelectorAll('input[name="strategies"]:checked'))
+                            .map(cb => cb.value);
+                    } else {
+                        formData.prospectionScript = document.getElementById('prospectionScript').value;
+                        const prospectionGoal = document.querySelector('input[name="prospectionGoal"]:checked');
+                        if (prospectionGoal) {
+                            formData.prospectionGoal = prospectionGoal.value;
+                        }
+                    }
+                    break;
+            }
+        }
+
+        function updateStep2Content() {
+            const subtitle = document.getElementById('step2-subtitle');
+            const label = document.getElementById('objectionDescriptionLabel');
+            const placeholder = document.getElementById('objectionDescription');
+
+            if (formData.contextType === 'objection') {
+                if (subtitle) subtitle.textContent = "Décrivez l'objection que vous rencontrez et sélectionnez les types pertinents";
+                if (label) label.textContent = "Quelles sont les objections auxquelles vous faites face ? :";
+                if (placeholder) placeholder.placeholder = "Écrivez ici, l'objection (ou les objections) qu'on vous fait trop souvent, expliquez ce que vous essayez de dire avant, êtes vous a l'aise dans la conversation, collez ici une phrase-type de client...";
+            } else {
+                if (subtitle) subtitle.textContent = "Décrivez votre contexte de prospection et sélectionnez les types d'objections que vous retoutez";
+                if (label) label.textContent = "Quel est votre contexte de prospection ?";
+                if (placeholder) placeholder.placeholder = "Collez ici votre pitch, décrivez votre produit/service, vos cibles et pourquoi eux, quels sont vos avantages...";
+            }
+        }
+
+        function updateStep4Content() {
+            const title = document.getElementById('step4-title');
+            const subtitle = document.getElementById('step4-subtitle');
+            const objectionContent = document.getElementById('objectionPathContent');
+            const prospectionContent = document.getElementById('prospectionPathContent');
+
+            if (formData.contextType === 'objection') {
+                if (title) title.textContent = "Votre stratégie de réponse";
+                if (subtitle) subtitle.textContent = "Rédigez votre réponse et sélectionnez les stratégies à utiliser";
+                if (objectionContent) objectionContent.style.display = 'block';
+                if (prospectionContent) prospectionContent.style.display = 'none';
+            } else {
+                if (title) title.textContent = "Votre script de prospection";
+                if (subtitle) subtitle.textContent = "Écrivez votre script et définissez votre objectif";
+                if (objectionContent) objectionContent.style.display = 'none';
+                if (prospectionContent) prospectionContent.style.display = 'block';
+            }
+        }
+
+        function selectRadio(name, value) {
+            // Désélectionner toutes les options du même groupe
+            document.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
+                radio.checked = false;
+                radio.closest('.radio-option').classList.remove('selected');
+            });
+
+            // Sélectionner l'option choisie
+            const selectedRadio = document.querySelector(`input[name="${name}"][value="${value}"]`);
+            if (selectedRadio) {
+                selectedRadio.checked = true;
+                selectedRadio.closest('.radio-option').classList.add('selected');
+            }
+
+            // Gérer les champs conditionnels
+            if (name === 'objectionType' && value === 'autre') {
+                const otherField = document.getElementById('otherObjectionField');
+                if (otherField) {
+                    otherField.classList.add('show');
+                }
+            } else if (name === 'objectionType') {
+                const otherField = document.getElementById('otherObjectionField');
+                if (otherField) {
+                    otherField.classList.remove('show');
+                }
+            }
+        }
+
+        function toggleCheckbox(name, value) {
+            const checkbox = document.querySelector(`input[name="${name}"][value="${value}"]`);
+            if (checkbox) {
+                checkbox.checked = !checkbox.checked;
+                const option = checkbox.closest('.checkbox-option');
+                if (checkbox.checked) {
+                    option.classList.add('selected');
+                } else {
+                    option.classList.remove('selected');
+                }
+            }
+
+            // Gérer l'affichage du champ "autre" pour les types d'objection
+            if (name === 'objectionTypes') {
+                const otherField = document.getElementById('otherObjectionField');
+                const selectedTypes = document.querySelectorAll('input[name="objectionTypes"]:checked');
+                if (selectedTypes.length === 0) {
+                    showNotification("Sélectionnez au moins un type d'objection");
+                    checkbox.checked = true;
+                    checkbox.closest('.checkbox-option').classList.add('selected');
+                }
+            }
+        }
+
+        function generatePrompt() {
+            // Sauvegarder les données de l'étape 4
+            saveStepData();
+
+            // Valider les champs requis pour l'étape 4
+            if (formData.contextType === 'objection') {
+                if (!formData.responseDraft || formData.responseDraft.trim() === '') {
+                    showNotification("Veuillez rédiger votre réponse");
+                    return;
+                }
+                if (!formData.strategies || formData.strategies.length === 0) {
+                    showNotification("Veuillez sélectionner au moins une stratégie");
+                    return;
+                }
+            } else {
+                if (!formData.prospectionScript || formData.prospectionScript.trim() === '') {
+                    showNotification("Veuillez écrire votre script de prospection");
+                    return;
+                }
+                if (!formData.prospectionGoal) {
+                    showNotification("Veuillez sélectionner votre objectif principal");
+                    return;
+                }
+            }
+
+            // Générer le prompt en fonction du contexte
+            let prompt = "";
+
+            if (formData.contextType === 'objection') {
+                prompt = generateObjectionPrompt();
+            } else {
+                prompt = generateProspectionPrompt();
+            }
+
+            // Afficher le prompt généré
+            const promptElement = document.getElementById('generated-prompt');
+            if (promptElement) {
+                promptElement.textContent = prompt;
+            }
+
+            // Passer à l'étape 5
+            nextStep();
+        }
+
+        function generateObjectionPrompt() {
+            const objectionTypeLabels = {
+                'prix': 'Prix/coût',
+                'delai': 'Délai/temps',
+                'confiance': 'Manque de confiance',
+                'besoin': 'Besoin flou',
+                'autorite': 'Manque d\'autorité',
+                'urgence': 'Absence d\'urgence'
+            };
+
+            const strategyLabels = {
+                'desamorcer': 'Désamorcer calmement',
+                'reformuler': 'Reformuler pour comprendre',
+                'contre-argumenter': 'Contre-argumenter',
+                'diagnostiquer': 'Diagnostiquer la cause racine',
+                'relational': 'Renforcer la relation',
+                'urgent': 'Créer un sentiment d\'urgence'
+            };
+
+            const selectedTypes = formData.objectionTypes.map(type => objectionTypeLabels[type] || type).join(', ');
+            const selectedStrategies = formData.strategies.map(strategy => strategyLabels[strategy] || strategy).join(', ');
+
+            let prompt = `Tu es un expert en traitement des objections commerciales avec une maîtrise approfondie des techniques de vente, de la psychologie client et des stratégies de persuasion.
+
+CONTEXTE DE L'OBJECTION :
+- Type d'objection(s) : ${selectedTypes}${formData.otherObjection ? ', ' + formData.otherObjection : ''}
+- Description détaillée : "${formData.objectionDescription}"
+- Canal de communication : ${formData.channel}
+- Phase du cycle de vente : ${formData.phase}
+- Rôle du prospect : ${formData.prospectRole}
+- Niveau d'autorité : ${formData.prospectAuthority}
+- Température du prospect : ${formData.prospectTemperature}
+
+MON AMBITION ET PLAN D'ACTION :
+"${formData.responseDraft}"
+
+STRATÉGIES QUE JE SOUHAITE UTILISER :
+${selectedStrategies}
+
+TAKE MISSION :
+Agis comme un coach expert en vente. Analyse mon objection et mon objectif actuel, puis fournis-moi une stratégie complète et optimisée en suivant ces étapes :
+
+1. ANALYSE PSYCHOLOGIQUE APPROFONDIE :
+   - Identifie les émotions sous-jacentes du prospect (peur, doute, méfiance, etc.)
+   - Repère les biais cognitifs en jeu (aversion à la perte, statu quo, etc.)
+   - Détermine le véritable besoin non exprimé derrière l'objection
+
+2. ÉVALUATION DE MA RÉPONSE ACTUELLE :
+   - Points forts de mon approche
+   - Points faibles et risques potentiels
+   - Opportunités manquées
+
+3. STRATÉGIE OPTIMISÉE :
+   Pour chaque stratégie sélectionnée (${selectedStrategies}), fournis :
+   - Une explication détaillée de pourquoi elle est pertinente ici
+   - Des phrases types concrètes et adaptées à la situation
+   - Le timing idéal pour utiliser chaque stratégie
+   - Les signaux à observer chez le prospect
+
+4. PLAN D'ACTION CONCRET :
+   - Un script de réponse amélioré intégrant toutes les stratégies
+   - Des questions de suivi pour maintenir le dialogue
+   - Des scénarios de réponses possibles du prospect et comment y réagir
+
+5. MESURES DE SUCCÈS :
+   - Indicateurs à observer pour savoir si la stratégie fonctionne
+   - Points de bascule pour ajuster l'approche
+   - Prochaines étapes recommandées
+
+Format de réponse : Sois direct, pratique et actionnable. Utilise des exemples concrets et un langage clair. Structure ta réponse avec des en-têtes clairs et des listes à puces pour une lecture facile.`;
+
+            return prompt;
+        }
+
+        function generateProspectionPrompt() {
+            const goalLabels = {
+                'rdv': 'Obtenir un rendez-vous',
+                'info': 'Fournir des informations',
+                'demo': 'Obtenir une démonstration',
+                'vente': 'Conclure une vente directe'
+            };
+
+            const objectionTypeLabels = {
+                'prix': 'Prix/coût',
+                'delai': 'Délai/temps',
+                'confiance': 'Manque de confiance',
+                'besoin': 'Besoin flou',
+                'autorite': 'Manque d\'autorité',
+                'urgence': 'Absence d\'urgence'
+            };
+
+            const selectedTypes = formData.objectionTypes.map(type => objectionTypeLabels[type] || type).join(', ');
+            const goalText = goalLabels[formData.prospectionGoal] || formData.prospectionGoal;
+
+            let prompt = `Tu es un expert en prospection commerciale et en anticipation des objections. Tu maîtrises les techniques de vente, la psychologie client et l'analyse critique des scripts commerciaux.
+
+CONTEXTE DE PROSPECTION :
+- Types d'objections à anticiper : ${selectedTypes}${formData.otherObjection ? ', ' + formData.otherObjection : ''}
+- Description du contexte : "${formData.objectionDescription}"
+- Canal de communication : ${formData.channel}
+- Phase du cycle de vente : ${formData.phase}
+- Rôle du prospect ciblé : ${formData.prospectRole}
+- Niveau d'autorité attendu : ${formData.prospectAuthority}
+- Température du prospect : ${formData.prospectTemperature}
+
+OBJECTIF PRINCIPAL : ${goalText}
+
+MON SCRIPT DE PROSPECTION, PITCH OU FIL ROUGE :
+"${formData.prospectionScript}"
+
+TAKE MISSION :
+Agis comme un expert en prospection. Analyse mon script et mon contexte, puis fournis une analyse complète et des recommandations en suivant ces étapes :
+
+1. ANALYSE CRITIQUE DU SCRIPT :
+   - Points forts et éléments percutants
+   - Faiblesses et zones de friction potentielles
+   - Manques et opportunités d'amélioration
+
+2. IDENTIFICATION DES LACUNES ET POINTS SENSIBLES :
+   - Repère les phrases ou formulations qui pourraient générer des objections
+   - Identifie les informations manquantes qui créeraient des doutes
+   - Signale les éléments qui pourraient paraître trop agressifs ou pas assez crédibles
+
+3. ANTICIPATION DES OBJECTIONS SPÉCIFIQUES :
+   Pour chaque type d'objection sélectionné (${selectedTypes}), analyse :
+   - Quelle partie de mon script est susceptible de déclencher cette objection
+   - Quelle serait la formulation probable de l'objection par le prospect
+   - Quel est le niveau de risque associé (élevé, moyen, faible)
+
+4. PERSPECTIVE CLIENT SCEPTIQUE :
+   Mets-toi dans la peau d'un prospect sceptique et réponds à mon script comme le ferait un client difficile :
+   - Quelles questions te poserais-tu ?
+   - Quelles objections formulerais-tu en premier ?
+   - Quels éléments te mettraient en garde ou te rendraient méfiant ?
+
+5. RECOMMANDATIONS D'AMÉLIORATION :
+   - Suggestions concrètes pour renforcer le script
+   - Reformulations des phrases problématiques
+   - Ajouts recommandés pour anticiper les objections
+   - Structure optimisée pour mon objectif (${goalText})
+
+6. SCRIPT AMÉLIORÉ :
+   Fournis une version améliorée de mon script qui :
+   - Intègre toutes tes recommandations
+   - Anticipe naturellement les objections principales
+   - Maintient un flux conversationnel fluide
+   - Est optimisé pour l'objectif visé
+
+Format de réponse : Sois critique mais constructif. Utilise des exemples précis tirés de mon script. Propose des alternatives concrètes et justifie tes recommandations avec des principes de persuasion éprouvés.`;
+
+            return prompt;
+        }
+
+        function copyPrompt() {
+            const promptText = document.getElementById('generated-prompt').textContent;
+            navigator.clipboard.writeText(promptText).then(function () {
+                const copyBtn = document.querySelector('.copy-btn');
+                if (copyBtn) {
+                    copyBtn.textContent = '✅ Chargé !';
+                    copyBtn.classList.add('copied');
+
+                    setTimeout(function () {
+                        copyBtn.textContent = '📋 Copier le prompt';
+                        copyBtn.classList.remove('copied');
+                    }, 2000);
+                }
+            }).catch(function () {
+                showNotification("Erreur lors de la copie du prompt");
+            });
+        }
+
+        function restart() {
+            // Réinitialiser les données
+            formData = {};
+            currentStep = 1;
+
+            // Réinitialiser tous les formulaires
+            document.querySelectorAll('input, select, textarea').forEach(element => {
+                if (element.type === 'radio' || element.type === 'checkbox') {
+                    element.checked = false;
+                } else {
+                    element.value = '';
+                }
+            });
+
+            // Réinitialiser les sélections visuelles
+            document.querySelectorAll('.radio-option, .checkbox-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+
+            // Masquer les champs conditionnels
+            document.querySelectorAll('.conditional-field').forEach(field => {
+                field.classList.remove('show');
+            });
+
+            // Revenir à l'étape 1
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active');
+            });
+
+            const step1 = document.getElementById('step-1');
+            if (step1) {
+                step1.classList.add('active');
+            }
+
+            updateProgress();
+        }
+
+        function updateSummary() {
+            const summaryContent = document.getElementById('summary-content');
+            if (!summaryContent) return;
+
+            let summaryHTML = '<div style="display: grid; gap: 10px;">';
+
+            // Étape 1
+            if (formData.contextType) {
+                summaryHTML += `
+                    <div style="padding: 8px; background: rgba(0, 150, 136, 0.1); border-radius: 6px;">
+                        <strong>Contexte :</strong> ${formData.contextType === 'objection' ? 'Objection actuelle' : 'Préparation de prospection'}
+                    </div>
+                `;
+            }
+
+            // Étape 2
+            if (formData.objectionDescription) {
+                summaryHTML += `
+                    <div style="padding: 8px; background: rgba(0, 150, 136, 0.1); border-radius: 6px;">
+                        <strong>Description :</strong> ${formData.objectionDescription.substring(0, 100)}${formData.objectionDescription.length > 100 ? '...' : ''}
+                    </div>
+                `;
+            }
+
+            if (formData.objectionTypes && formData.objectionTypes.length > 0) {
+                const typeLabels = {
+                    'prix': 'Prix',
+                    'delai': 'Délai',
+                    'confiance': 'Confiance',
+                    'besoin': 'Besoin',
+                    'autorite': 'Autorité',
+                    'urgence': 'Urgence'
+                };
+                const typesText = formData.objectionTypes.map(type => typeLabels[type] || type).join(', ');
+                summaryHTML += `
+                    <div style="padding: 8px; background: rgba(0, 150, 136, 0.1); border-radius: 6px;">
+                        <strong>Types d'objections :</strong> ${typesText}
+                    </div>
+                `;
+            }
+
+            // Étape 3
+            if (formData.channel) {
+                summaryHTML += `
+                    <div style="padding: 8px; background: rgba(0, 150, 136, 0.1); border-radius: 6px;">
+                        <strong>Canal :</strong> ${formData.channel}
+                    </div>
+                `;
+            }
+
+            if (formData.phase) {
+                summaryHTML += `
+                    <div style="padding: 8px; background: rgba(0, 150, 136, 0.1); border-radius: 6px;">
+                        <strong>Phase :</strong> ${formData.phase}
+                    </div>
+                `;
+            }
+
+            // Étape 4
+            if (formData.contextType === 'objection' && formData.strategies) {
+                const strategyLabels = {
+                    'desamorcer': 'Désamorcer',
+                    'reformuler': 'Reformuler',
+                    'contre-argumenter': 'Contre-argumenter',
+                    'diagnostiquer': 'Diagnostiquer',
+                    'relational': 'Relation',
+                    'urgent': 'Urgence'
+                };
+                const strategiesText = formData.strategies.map(strategy => strategyLabels[strategy] || strategy).join(', ');
+                summaryHTML += `
+                    <div style="padding: 8px; background: rgba(0, 150, 136, 0.1); border-radius: 6px;">
+                        <strong>Stratégies :</strong> ${strategiesText}
+                    </div>
+                `;
+            } else if (formData.contextType === 'prospection' && formData.prospectionGoal) {
+                const goalLabels = {
+                    'rdv': 'Rendez-vous',
+                    'info': 'Informations',
+                    'demo': 'Démonstration',
+                    'vente': 'Vente directe'
+                };
+                summaryHTML += `
+                    <div style="padding: 8px; background: rgba(0, 150, 136, 0.1); border-radius: 6px;">
+                        <strong>Objectif :</strong> ${goalLabels[formData.prospectionGoal] || formData.prospectionGoal}
+                    </div>
+                `;
+            }
+
+            summaryHTML += '</div>';
+            summaryContent.innerHTML = summaryHTML;
+        }
+
+        // Mettre à jour le contenu de l'étape 4 quand on y arrive
+        document.addEventListener('DOMContentLoaded', function () {
+            // Observer les changements d'étape pour mettre à jour le contenu de l'étape 4
+            const observer = new MutationObserver(function (mutations) {
+                mutations.forEach(function (mutation) {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        const step4 = document.getElementById('step-4');
+                        if (step4 && step4.classList.contains('active')) {
+                            updateStep4Content();
+                        }
+                    }
+                });
+            });
+
+            // Observer l'étape 4
+            const step4 = document.getElementById('step-4');
+            if (step4) {
+                observer.observe(step4, { attributes: true });
+            }
+        });
+    </script>
+</body>
+
+</html>
