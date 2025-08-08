@@ -811,20 +811,22 @@
             position: relative;
             z-index: 1;
         }
+
         @media (max-width: 600px) {
-    .btn-group {
-        flex-direction: column;
-        gap: 10px;
-        align-items: stretch;
-    }
-    .btn-group .btn {
-        min-width: 0;
-        width: 100%;
-        font-size: 1rem;
-        padding: 14px 0;
-        box-sizing: border-box;
-    }
-}
+            .btn-group {
+                flex-direction: column;
+                gap: 10px;
+                align-items: stretch;
+            }
+
+            .btn-group .btn {
+                min-width: 0;
+                width: 100%;
+                font-size: 1rem;
+                padding: 14px 0;
+                box-sizing: border-box;
+            }
+        }
     </style>
 </head>
 
@@ -928,7 +930,6 @@
                 </div>
 
                 <div class="btn-group">
-                    <button class="btn btn-secondary" onclick="prevStep()" style="visibility: hidden;">Retour</button>
                     <button class="btn" onclick="nextStep()" id="step1-next">Continuer</button>
                 </div>
             </div>
@@ -1006,8 +1007,8 @@
                 </div>
 
                 <div class="btn-group">
-                    <button class="btn btn-secondary" onclick="prevStep()">Retour</button>
                     <button class="btn" onclick="nextStep()" id="step2-next">Continuer</button>
+                    <button class="btn btn-secondary" onclick="prevStep()">Retour</button>
                 </div>
             </div>
 
@@ -1075,8 +1076,8 @@
                 </div>
 
                 <div class="btn-group">
-                    <button class="btn btn-secondary" onclick="prevStep()">Retour</button>
                     <button class="btn" onclick="nextStep()">Continuer</button>
+                    <button class="btn btn-secondary" onclick="prevStep()">Retour</button>
                 </div>
             </div>
 
@@ -1185,8 +1186,8 @@
                 </div>
 
                 <div class="btn-group">
+                    <button class="btn" onclick="generatePrompt()">Préparer mon plan</button>
                     <button class="btn btn-secondary" onclick="prevStep()">Retour</button>
-                    <button class="btn" onclick="generatePrompt()">Générer le prompt</button>
                 </div>
             </div>
 
@@ -1201,7 +1202,8 @@
                     <h2 class="step-title" style="justify-content: center; margin-bottom: 20px;">
                         <strong>Votre plan anti-objections est prêt suivez ces 3 étapes</strong>
                     </h2>
-                    <p class="step-subtitle"><br> 1️⃣👉Chargez votre configuration <br> 2️⃣👉Cliquez sur le bouton "NO OBJECTIONS
+                    <p class="step-subtitle"><br> 1️⃣👉Chargez votre configuration <br> 2️⃣👉Cliquez sur le bouton "NO
+                        OBJECTIONS
                         ENGINE" <br>3️⃣👉Collez-tout et commencez à travailler </p>
 
                     <!-- Résumé des choix -->
@@ -1215,16 +1217,20 @@
                     </div>
 
                     <div class="btn-group" style="margin-top: 30px;">
-                        <button class="btn copy-btn" id="copyPromptBtn" onclick="copyPrompt()">1️⃣ Charger configuration</button>
+                        <button class="btn copy-btn" id="copyPromptBtn" onclick="copyPrompt()">1️⃣ Charger
+                            configuration</button>
                         <a href="https://chatgpt.com/g/g-689526a65fb881919cd9591e5fee2f71-no-objections-engine"
                             target="_blank" class="btn btn-futuristic"><span>2️⃣NO OBJECTIONS ENGINE</span></a>
                     </div>
+                    <div style="margin-top: 30px;">
+                        <button class="btn btn-secondary" onclick="prevStep()">Retour</button>
+                    </div>
 
-<div class="prompt-container" style="display: none;">
-    <div class="prompt-text" id="generated-prompt">
-        <!-- Le prompt sera généré ici -->
-    </div>
-</div>
+                    <div class="prompt-container" style="display: none;">
+                        <div class="prompt-text" id="generated-prompt">
+                            <!-- Le prompt sera généré ici -->
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -1844,47 +1850,47 @@ Format de réponse : Sois critique mais constructif. Utilise des exemples préci
             return prompt;
         }
 
-function copyPrompt() {
-    const promptText = document.getElementById('generated-prompt').textContent;
-    if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(promptText).then(function () {
-            showCopySuccess();
-        }).catch(function () {
-            fallbackCopy(promptText);
-        });
-    } else {
-        fallbackCopy(promptText);
-    }
-}
+        function copyPrompt() {
+            const promptText = document.getElementById('generated-prompt').textContent;
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(promptText).then(function () {
+                    showCopySuccess();
+                }).catch(function () {
+                    fallbackCopy(promptText);
+                });
+            } else {
+                fallbackCopy(promptText);
+            }
+        }
 
-function fallbackCopy(text) {
-    const textarea = document.createElement('textarea');
-    textarea.value = text;
-    textarea.setAttribute('readonly', '');
-    textarea.style.position = 'absolute';
-    textarea.style.left = '-9999px';
-    document.body.appendChild(textarea);
-    textarea.select();
-    try {
-        document.execCommand('copy');
-        showCopySuccess();
-    } catch (err) {
-        showNotification("Erreur lors de la copie du prompt");
-    }
-    document.body.removeChild(textarea);
-}
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.setAttribute('readonly', '');
+            textarea.style.position = 'absolute';
+            textarea.style.left = '-9999px';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showCopySuccess();
+            } catch (err) {
+                showNotification("Erreur lors de la copie du prompt");
+            }
+            document.body.removeChild(textarea);
+        }
 
-function showCopySuccess() {
-    const copyBtn = document.querySelector('.copy-btn');
-    if (copyBtn) {
-        copyBtn.textContent = '✅ Chargé !';
-        copyBtn.classList.add('copied');
-        setTimeout(function () {
-            copyBtn.textContent = 'Charger configuration';
-            copyBtn.classList.remove('copied');
-        }, 2000);
-    }
-}
+        function showCopySuccess() {
+            const copyBtn = document.querySelector('.copy-btn');
+            if (copyBtn) {
+                copyBtn.textContent = '✅ Chargé !';
+                copyBtn.classList.add('copied');
+                setTimeout(function () {
+                    copyBtn.textContent = 'Charger configuration';
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            }
+        }
 
         function restart() {
             // Réinitialiser les données
