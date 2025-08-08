@@ -17,13 +17,17 @@ if not exist .git (
     git remote set-url origin https://github.com/%USER%/%REPO%.git
 )
 
-REM Tirer les changements distants avant de pousser
+REM Sauvegarder les changements non commités avant pull
+git add .
+git commit -m "Auto-save before pull" >nul 2>&1
+
+REM Mettre à jour depuis GitHub
 git fetch origin %BRANCH%
 git pull origin %BRANCH% --rebase
 
-REM Ajouter les fichiers et commit
+REM Ajouter tes changements finaux et commit
 git add .
-git commit -m "Update"
+git commit -m "Update" >nul 2>&1
 
 REM Pousser vers GitHub
 git push -u origin %BRANCH%
