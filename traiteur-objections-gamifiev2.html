@@ -640,11 +640,6 @@
             margin-top: 30px;
         }
 
-        .btn-group .btn {
-            flex: 1;
-            max-width: 150px;
-        }
-
         /* Champs conditionnels */
         .conditional-field {
             max-height: 0;
@@ -1149,6 +1144,10 @@
                             </div>
                         </div>
                     </div>
+                    <div class="btn-group">
+                        <button class="btn" onclick="generatePrompt()">Continuer</button>
+                        <button class="btn btn-secondary" onclick="prevStep()">Retour</button>
+                    </div>
                 </div>
 
                 <!-- Contenu pour "Je prépare une phase de prospection" -->
@@ -1188,54 +1187,60 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Étape 5: Résultat final -->
-                    <div class="step" id="step-5">
-                        <div class="result-container">
-                            <div class="success-icon">
-                                <svg width="40" height="40" fill="white" viewBox="0 0 24 24">
-                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
-                            <h2 class="step-title" style="justify-content: center; margin-bottom: 20px;">
-                                <strong>Votre plan anti-objections est prêt suivez ces 3 étapes</strong>
-                            </h2>
-                            <p class="step-subtitle"><br> 1️⃣👉Chargez votre configuration <br> 2️⃣👉Cliquez sur le
-                                bouton "NO
-                                OBJECTIONS
-                                ENGINE" <br>3️⃣👉Collez-tout et commencez à travailler </p>
-
-                            <!-- Résumé des choix -->
-                            <div
-                                style="margin-top: 40px; padding: 20px; background: var(--light-bg); border-radius: 15px; text-align: left;">
-                                <h3 style="margin-bottom: 15px; color: var(--primary-green);">📊 Résumé de votre
-                                    configuration
-                                </h3>
-                                <div id="summary-content">
-                                    <!-- Le résumé sera généré ici -->
-                                </div>
-                            </div>
-
-                            <div class="btn-group" style="margin-top: 30px;">
-                                <button class="btn copy-btn" id="copyPromptBtn" onclick="copyPrompt()">1️⃣ Charger
-                                    configuration</button>
-                                <a href="https://chatgpt.com/g/g-689526a65fb881919cd9591e5fee2f71-no-objections-engine"
-                                    target="_blank" class="btn btn-futuristic"><span>2️⃣NO OBJECTIONS ENGINE</span></a>
-                            </div>
-                            <div style="margin-top: 30px;">
-                                <button class="btn btn-secondary" onclick="prevStep()">Retour</button>
-                            </div>
-
-                            <div class="prompt-container" style="display: none;">
-                                <div class="prompt-text" id="generated-prompt">
-                                    <!-- Le prompt sera généré ici -->
-                                </div>
-                            </div>
-
-                        </div>
+                    <div class="btn-group">
+                        <button class="btn" onclick="generatePrompt()">Continuer</button>
+                        <button class="btn btn-secondary" onclick="prevStep()">Retour</button>
                     </div>
                 </div>
             </div>
+
+            <!-- Étape 5: Résultat final -->
+            <div class="step" id="step-5">
+                <div class="result-container">
+                    <div class="success-icon">
+                        <svg width="40" height="40" fill="white" viewBox="0 0 24 24">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h2 class="step-title" style="justify-content: center; margin-bottom: 20px;">
+                        <strong>Votre plan anti-objections est prêt suivez ces 3 étapes</strong>
+                    </h2>
+                    <p class="step-subtitle"><br> 1️⃣👉Chargez votre configuration <br> 2️⃣👉Cliquez sur le
+                        bouton "NO
+                        OBJECTIONS
+                        ENGINE" <br>3️⃣👉Collez-tout et commencez à travailler </p>
+
+                    <!-- Résumé des choix -->
+                    <div
+                        style="margin-top: 40px; padding: 20px; background: var(--light-bg); border-radius: 15px; text-align: left;">
+                        <h3 style="margin-bottom: 15px; color: var(--primary-green);">📊 Résumé de votre
+                            configuration
+                        </h3>
+                        <div id="summary-content">
+                            <!-- Le résumé sera généré ici -->
+                        </div>
+                    </div>
+
+                    <div class="btn-group" style="margin-top: 30px;">
+                        <button class="btn copy-btn" id="copyPromptBtn" onclick="copyPrompt()">1️⃣ Charger
+                            configuration</button>
+                        <a href="https://chatgpt.com/g/g-689526a65fb881919cd9591e5fee2f71-no-objections-engine"
+                            target="_blank" class="btn btn-futuristic"><span>2️⃣NO OBJECTIONS ENGINE</span></a>
+                    </div>
+                    <div style="margin-top: 30px;">
+                        <button class="btn btn-secondary" onclick="prevStep()">Retour</button>
+                    </div>
+
+                    <div class="prompt-container" style="display: none;">
+                        <div class="prompt-text" id="generated-prompt">
+                            <!-- Le prompt sera généré ici -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
             <script>
                 let currentStep = 1;
