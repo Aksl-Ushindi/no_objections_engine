@@ -10,6 +10,7 @@ REM -------------
 
 git init
 git branch -M %BRANCH%
+git remote remove origin >nul 2>&1
 git remote add origin https://github.com/%USER%/%REPO%.git
 git add .
 git commit -m "Update"
