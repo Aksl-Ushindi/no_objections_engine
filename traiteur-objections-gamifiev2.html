@@ -1034,12 +1034,16 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="prospectAuthority">Niveau d'autorité de votre interlocuteur :</label>
-                    <select id="prospectAuthority" name="prospectAuthority" required>
+                    <label for="decision_position">Niveau d'autorité de votre interlocuteur :</label>
+                    <select id="decision_position" name="decision_position" required>
                         <option value="">Sélectionnez le niveau</option>
-                        <option value="eleve">Élevé (peut décider seul)</option>
-                        <option value="moyen">Moyen (influence la décision)</option>
-                        <option value="bas">Bas (simple informateur)</option>
+                        <option value="decision_maker">Décideur final — a le pouvoir de signer ou de refuser.</option>
+                        <option value="influencer">Influenceur — oriente le décideur par son avis, son expertise ou sa
+                            relation.</option>
+                        <option value="gatekeeper">Opérateur/Gardien — filtre l’accès au décideur, exécute mais ne décide
+                            pas.</option>
+                        <option value="end_user">Utilisateur final — bénéficiaire ou victime de la solution, peut générer un
+                            veto indirect</option>
                     </select>
                 </div>
 
@@ -1056,12 +1060,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="prospectRole">Quel rôle joue votre interlocuteur ?</label>
-                    <select id="prospectRole" name="prospectRole" required>
+                    <label for="disposition_state">Dans quel état mental est ton interlocuteur au moment de l’échange
+                        ?</label>
+                    <select id="disposition_state" name="disposition_state" required>
                         <option value="">Sélectionnez le rôle</option>
-                        <option value="decideur">Décideur Unique | Final</option>
-                        <option value="influenceur">Influenceur | Conseiller important</option>
-                        <option value="autre">Autre | Inconnu</option>
+                        <option value="open">Ouvert / Curieux — prêt à écouter, posture d’exploration.</option>
+                        <option value="neutral">Neutre / Attentiste — observe, n’exprime pas encore de position.</option>
+                        <option value="wary">Méfiant / Défensif — se protège, teste tes arguments</option>
+                        <option value="resistant">Résistant / Fermé — posture de rejet ou de confrontation</option>
                     </select>
                 </div>
 
@@ -1541,8 +1547,8 @@
                         case 3:
                             formData.channel = document.getElementById('channel').value;
                             formData.phase = document.getElementById('phase').value;
-                            formData.prospectRole = document.getElementById('prospectRole').value;
-                            formData.prospectAuthority = document.getElementById('prospectAuthority').value;
+                            formData.disposition_state = document.getElementById('disposition_state').value;
+                            formData.decision_position = document.getElementById('decision_position').value;
                             formData.prospectTemperature = document.getElementById('prospectTemperature').value;
                             break;
                         case 4:
@@ -1719,8 +1725,8 @@ CONTEXTE DE L'OBJECTION :
 - Description détaillée : "${formData.objectionDescription}"
 - Canal de communication : ${formData.channel}
 - Phase du cycle de vente : ${formData.phase}
-- Rôle du prospect : ${formData.prospectRole}
-- Niveau d'autorité : ${formData.prospectAuthority}
+- Disposition psychologique : ${formData.disposition_state}
+- Position dans le processus décisionnel : ${formData.decision_position}
 - Température du prospect : ${formData.prospectTemperature}
 
 MON AMBITION ET PLAN D'ACTION :
@@ -1793,8 +1799,8 @@ CONTEXTE DE PROSPECTION :
 - Description du contexte : "${formData.objectionDescription}"
 - Canal de communication : ${formData.channel}
 - Phase du cycle de vente : ${formData.phase}
-- Rôle du prospect ciblé : ${formData.prospectRole}
-- Niveau d'autorité attendu : ${formData.prospectAuthority}
+- Disposition psychologique : ${formData.disposition_state}
+- Position dans le processus décisionnel : ${formData.decision_position}
 - Température du prospect : ${formData.prospectTemperature}
 
 OBJECTIF PRINCIPAL : ${goalText}
