@@ -1155,571 +1155,564 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Quels sont les 1 ou 2 objectifs pricipaux de cette stratégie ?</label>
+                        <label>Quels sont les 1 ou 2 objectifs principaux de cette stratégie ?</label>
                         <div class="options-grid">
-                            <div class="radio-option" onclick="selectRadio('prospectionGoal', 'rdv')">
-                                <input type="radio" name="prospectionGoal" value="rdv">
+                            <div class="checkbox-option" onclick="toggleCheckbox('prospectionGoal', 'rdv')">
+                                <input type="checkbox" name="prospectionGoal" value="rdv">
                                 <div class="option-title">📅 Obtenir un rendez-vous</div>
                                 <div class="option-description">Le but principal est de fixer un rendez-vous pour
                                     présenter l'offre</div>
                             </div>
 
-                            <div class="radio-option" onclick="selectRadio('prospectionGoal', 'info')">
-                                <input type="radio" name="prospectionGoal" value="info">
+                            <div class="checkbox-option" onclick="toggleCheckbox('prospectionGoal', 'info')">
+                                <input type="checkbox" name="prospectionGoal" value="info">
                                 <div class="option-title">📊 Fournir des informations</div>
                                 <div class="option-description">Partager des informations pour susciter l'intérêt</div>
                             </div>
 
-                            <div class="radio-option" onclick="selectRadio('prospectionGoal', 'demo')">
-                                <input type="radio" name="prospectionGoal" value="demo">
+                            <div class="checkbox-option" onclick="toggleCheckbox('prospectionGoal', 'demo')">
+                                <input type="checkbox" name="prospectionGoal" value="demo">
                                 <div class="option-title">🎯 Obtenir une démonstration</div>
                                 <div class="option-description">Convaincre le prospect d'assister à une démo</div>
                             </div>
 
-                            <div class="radio-option" onclick="selectRadio('prospectionGoal', 'vente')">
-                                <input type="radio" name="prospectionGoal" value="vente">
+                            <div class="checkbox-option" onclick="toggleCheckbox('prospectionGoal', 'vente')">
+                                <input type="checkbox" name="prospectionGoal" value="vente">
                                 <div class="option-title">💰 Conclure une vente directe</div>
                                 <div class="option-description">Vendre directement via ce premier contact</div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="btn-group">
-                    <button class="btn" onclick="generatePrompt()">Préparer mon plan</button>
-                    <button class="btn btn-secondary" onclick="prevStep()">Retour</button>
+                    <!-- Étape 5: Résultat final -->
+                    <div class="step" id="step-5">
+                        <div class="result-container">
+                            <div class="success-icon">
+                                <svg width="40" height="40" fill="white" viewBox="0 0 24 24">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <h2 class="step-title" style="justify-content: center; margin-bottom: 20px;">
+                                <strong>Votre plan anti-objections est prêt suivez ces 3 étapes</strong>
+                            </h2>
+                            <p class="step-subtitle"><br> 1️⃣👉Chargez votre configuration <br> 2️⃣👉Cliquez sur le
+                                bouton "NO
+                                OBJECTIONS
+                                ENGINE" <br>3️⃣👉Collez-tout et commencez à travailler </p>
+
+                            <!-- Résumé des choix -->
+                            <div
+                                style="margin-top: 40px; padding: 20px; background: var(--light-bg); border-radius: 15px; text-align: left;">
+                                <h3 style="margin-bottom: 15px; color: var(--primary-green);">📊 Résumé de votre
+                                    configuration
+                                </h3>
+                                <div id="summary-content">
+                                    <!-- Le résumé sera généré ici -->
+                                </div>
+                            </div>
+
+                            <div class="btn-group" style="margin-top: 30px;">
+                                <button class="btn copy-btn" id="copyPromptBtn" onclick="copyPrompt()">1️⃣ Charger
+                                    configuration</button>
+                                <a href="https://chatgpt.com/g/g-689526a65fb881919cd9591e5fee2f71-no-objections-engine"
+                                    target="_blank" class="btn btn-futuristic"><span>2️⃣NO OBJECTIONS ENGINE</span></a>
+                            </div>
+                            <div style="margin-top: 30px;">
+                                <button class="btn btn-secondary" onclick="prevStep()">Retour</button>
+                            </div>
+
+                            <div class="prompt-container" style="display: none;">
+                                <div class="prompt-text" id="generated-prompt">
+                                    <!-- Le prompt sera généré ici -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Étape 5: Résultat final -->
-            <div class="step" id="step-5">
-                <div class="result-container">
-                    <div class="success-icon">
-                        <svg width="40" height="40" fill="white" viewBox="0 0 24 24">
-                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <h2 class="step-title" style="justify-content: center; margin-bottom: 20px;">
-                        <strong>Votre plan anti-objections est prêt suivez ces 3 étapes</strong>
-                    </h2>
-                    <p class="step-subtitle"><br> 1️⃣👉Chargez votre configuration <br> 2️⃣👉Cliquez sur le bouton "NO
-                        OBJECTIONS
-                        ENGINE" <br>3️⃣👉Collez-tout et commencez à travailler </p>
+            <script>
+                let currentStep = 1;
+                let formData = {};
+                const totalSteps = 5;
 
-                    <!-- Résumé des choix -->
-                    <div
-                        style="margin-top: 40px; padding: 20px; background: var(--light-bg); border-radius: 15px; text-align: left;">
-                        <h3 style="margin-bottom: 15px; color: var(--primary-green);">📊 Résumé de votre configuration
-                        </h3>
-                        <div id="summary-content">
-                            <!-- Le résumé sera généré ici -->
-                        </div>
-                    </div>
+                // Messages pour les écrans de transition
+                const transitionMessages = {
+                    1: "Préparez-vous à définir votre contexte commercial !",
+                    2: "Parfait ! Maintenant décrivez votre objection...",
+                    3: "Excellent ! Décrivons maintenant le contexte de l'interaction...",
+                    4: "Super ! Définissons votre stratégie de réponse...",
+                    5: "Génial ! Votre prompt personnalisé arrive..."
+                };
 
-                    <div class="btn-group" style="margin-top: 30px;">
-                        <button class="btn copy-btn" id="copyPromptBtn" onclick="copyPrompt()">1️⃣ Charger
-                            configuration</button>
-                        <a href="https://chatgpt.com/g/g-689526a65fb881919cd9591e5fee2f71-no-objections-engine"
-                            target="_blank" class="btn btn-futuristic"><span>2️⃣NO OBJECTIONS ENGINE</span></a>
-                    </div>
-                    <div style="margin-top: 30px;">
-                        <button class="btn btn-secondary" onclick="prevStep()">Retour</button>
-                    </div>
+                // Mascottes pour chaque étape
+                const stepMascottes = {
+                    1: "mascotte_reflexion.png",
+                    2: "mascotte_aide.png",
+                    3: "mascotte_validation.png",
+                    4: "mascotte_accueil.png"
+                };
 
-                    <div class="prompt-container" style="display: none;">
-                        <div class="prompt-text" id="generated-prompt">
-                            <!-- Le prompt sera généré ici -->
-                        </div>
-                    </div>
+                // Messages de chargement
+                const loadingMessages = [
+                    "Analyse de vos réponses...",
+                    "Calcul des meilleures stratégies...",
+                    "Adaptation du prompt à votre contexte...",
+                    "Optimisation des techniques de réponse...",
+                    "Finalisation de votre assistant expert..."
+                ];
 
-                </div>
-            </div>
-        </div>
-    </div>
+                // Labels de progression
+                const progressLabels = [
+                    "", // Index 0 non utilisé
+                    "Contexte général",
+                    "Nature de l'objection",
+                    "Contexte d'interaction",
+                    "Intention stratégique",
+                    "Prompt généré"
+                ];
 
-    <script>
-        let currentStep = 1;
-        let formData = {};
-        const totalSteps = 5;
+                // Fonction pour afficher une notification d'erreur
+                function showNotification(message, duration = 3000) {
+                    const notification = document.getElementById('notification');
+                    if (notification) {
+                        notification.textContent = message;
+                        notification.classList.add('show');
 
-        // Messages pour les écrans de transition
-        const transitionMessages = {
-            1: "Préparez-vous à définir votre contexte commercial !",
-            2: "Parfait ! Maintenant décrivez votre objection...",
-            3: "Excellent ! Décrivons maintenant le contexte de l'interaction...",
-            4: "Super ! Définissons votre stratégie de réponse...",
-            5: "Génial ! Votre prompt personnalisé arrive..."
-        };
-
-        // Mascottes pour chaque étape
-        const stepMascottes = {
-            1: "mascotte_reflexion.png",
-            2: "mascotte_aide.png",
-            3: "mascotte_validation.png",
-            4: "mascotte_accueil.png"
-        };
-
-        // Messages de chargement
-        const loadingMessages = [
-            "Analyse de vos réponses...",
-            "Calcul des meilleures stratégies...",
-            "Adaptation du prompt à votre contexte...",
-            "Optimisation des techniques de réponse...",
-            "Finalisation de votre assistant expert..."
-        ];
-
-        // Labels de progression
-        const progressLabels = [
-            "", // Index 0 non utilisé
-            "Contexte général",
-            "Nature de l'objection",
-            "Contexte d'interaction",
-            "Intention stratégique",
-            "Prompt généré"
-        ];
-
-        // Fonction pour afficher une notification d'erreur
-        function showNotification(message, duration = 3000) {
-            const notification = document.getElementById('notification');
-            if (notification) {
-                notification.textContent = message;
-                notification.classList.add('show');
-
-                setTimeout(function () {
-                    notification.classList.remove('show');
-                }, duration);
-            }
-        }
-
-        // Démarrage de l'application
-        function startApp() {
-            const welcomeScreen = document.getElementById('welcomeScreen');
-            const mainContainer = document.getElementById('mainContainer');
-
-            if (welcomeScreen) {
-                welcomeScreen.classList.add('hidden');
-            }
-
-            if (mainContainer) {
-                mainContainer.style.display = 'block';
-            }
-
-            // Passer directement à l'étape 1 avec transition
-            showTransition(1, function () {
-                currentStep = 1;
-                const step1 = document.getElementById('step-1');
-                if (step1) {
-                    step1.classList.add('active');
+                        setTimeout(function () {
+                            notification.classList.remove('show');
+                        }, duration);
+                    }
                 }
-                updateProgress();
-            });
-        }
 
-        // Fonction pour afficher un écran de transition
-        function showTransition(stepNumber, callback) {
-            const transitionScreen = document.getElementById('transitionScreen');
-            const transitionMascotte = document.getElementById('transitionMascotte');
-            const transitionMessage = document.getElementById('transitionMessage');
+                // Démarrage de l'application
+                function startApp() {
+                    const welcomeScreen = document.getElementById('welcomeScreen');
+                    const mainContainer = document.getElementById('mainContainer');
 
-            if (!transitionScreen || !transitionMascotte || !transitionMessage) {
-                if (callback) callback();
-                return;
-            }
+                    if (welcomeScreen) {
+                        welcomeScreen.classList.add('hidden');
+                    }
 
-            // Configuration de la mascotte et du message
-            if (stepNumber >= 1 && stepNumber <= 4 && stepMascottes[stepNumber]) {
-                transitionMascotte.src = stepMascottes[stepNumber];
-            } else {
-                transitionMascotte.src = "mascotte_finale.png"; // Mascotte finale pour l'étape 5
-            }
+                    if (mainContainer) {
+                        mainContainer.style.display = 'block';
+                    }
 
-            if (transitionMessages[stepNumber]) {
-                transitionMessage.textContent = transitionMessages[stepNumber];
-            } else {
-                transitionMessage.textContent = "Préparation de votre prompt final...";
-            }
+                    // Passer directement à l'étape 1 avec transition
+                    showTransition(1, function () {
+                        currentStep = 1;
+                        const step1 = document.getElementById('step-1');
+                        if (step1) {
+                            step1.classList.add('active');
+                        }
+                        updateProgress();
+                    });
+                }
 
-            // Affichage de l'écran de transition
-            transitionScreen.classList.add('show');
+                // Fonction pour afficher un écran de transition
+                function showTransition(stepNumber, callback) {
+                    const transitionScreen = document.getElementById('transitionScreen');
+                    const transitionMascotte = document.getElementById('transitionMascotte');
+                    const transitionMessage = document.getElementById('transitionMessage');
 
-            // Masquer après 2.5 secondes et exécuter le callback
-            setTimeout(function () {
-                transitionScreen.classList.remove('show');
-                if (callback) callback();
-            }, 2500);
-        }
-
-        // Fonction pour afficher l'écran de chargement
-        function showLoadingScreen(callback) {
-            const loadingScreen = document.getElementById('loadingScreen');
-            const progressBar = document.getElementById('progressBar');
-            const loadingMessage = document.getElementById('loadingMessage');
-            const loadingStatus = document.getElementById('loadingStatus');
-
-            if (!loadingScreen || !progressBar || !loadingMessage || !loadingStatus) {
-                if (callback) callback();
-                return;
-            }
-
-            loadingScreen.classList.add('show');
-
-            let progress = 0;
-            let messageIndex = 0;
-
-            const loadingInterval = setInterval(function () {
-                progress += Math.random() * 15 + 5; // Progression aléatoire entre 5 et 20%
-
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(loadingInterval);
-
-                    setTimeout(function () {
-                        loadingScreen.classList.remove('show');
+                    if (!transitionScreen || !transitionMascotte || !transitionMessage) {
                         if (callback) callback();
-                    }, 500);
-                }
-
-                if (progressBar) {
-                    progressBar.style.width = progress + '%';
-                }
-
-                if (loadingStatus) {
-                    loadingStatus.textContent = Math.round(progress) + '%';
-                }
-
-                // Changer le message toutes les 2 progressions
-                if (Math.round(progress) % 20 === 0 && messageIndex < loadingMessages.length - 1) {
-                    messageIndex++;
-                    if (loadingMessage) {
-                        loadingMessage.textContent = loadingMessages[messageIndex];
+                        return;
                     }
-                }
-            }, 300);
-        }
 
-        // Mise à jour de la mascotte accompagnatrice
-        function updateCompanionMascotte() {
-            const mascotte = document.getElementById('companionMascotte');
-            if (!mascotte) return;
-
-            if (currentStep >= 1 && currentStep <= 4 && stepMascottes[currentStep]) {
-                mascotte.src = stepMascottes[currentStep];
-                mascotte.style.display = 'block';
-            } else {
-                mascotte.style.display = 'none';
-            }
-        }
-
-        function updateProgress() {
-            // Calcul du pourcentage basé sur les étapes 1-5
-            const percentage = currentStep <= 1 ? 0 : Math.round(((currentStep - 1) / (totalSteps - 1)) * 100);
-            const progressPercentage = document.getElementById('progressPercentage');
-            if (progressPercentage) {
-                progressPercentage.textContent = percentage + '%';
-            }
-
-            // Mise à jour des étapes (les indices de progress-step correspondent maintenant aux étapes 1-5)
-            const progressSteps = document.querySelectorAll('.progress-step');
-            if (progressSteps) {
-                progressSteps.forEach(function (step, index) {
-                    const stepNumber = index + 1; // Les étapes commencent à 1
-                    step.classList.remove('active', 'completed');
-                    if (stepNumber < currentStep) {
-                        step.classList.add('completed');
-                    } else if (stepNumber === currentStep) {
-                        step.classList.add('active');
-                    }
-                });
-            }
-
-            // Mise à jour du label
-            const progressLabel = document.getElementById('progressLabel');
-            if (progressLabel && progressLabels[currentStep]) {
-                progressLabel.textContent = progressLabels[currentStep];
-            }
-
-            updateCompanionMascotte(); // Mettre à jour la mascotte accompagnatrice
-            updateSummary(); // Mettre à jour le résumé des choix
-        }
-
-        function nextStep() {
-            // Validation avant de passer à l'étape suivante
-            if (currentStep === 1 && !validateStep1()) return;
-            if (currentStep === 2 && !validateStep2()) return;
-
-            // Sauvegarder les données de l'étape actuelle
-            saveStepData();
-
-            // Masquer l'étape actuelle
-            const currentStepElement = document.getElementById('step-' + currentStep);
-            if (currentStepElement) {
-                currentStepElement.classList.remove('active');
-            }
-
-            // Si on passe de l'étape 4 à 5, afficher l'écran de chargement
-            if (currentStep === 4) {
-                showLoadingScreen(function () {
-                    currentStep++;
-                    const nextStepElement = document.getElementById('step-' + currentStep);
-                    if (nextStepElement) {
-                        nextStepElement.classList.add('active');
-                    }
-                    updateProgress();
-                });
-            } else {
-                // Pour les autres transitions, utiliser l'écran de transition normal
-                showTransition(currentStep + 1, function () {
-                    currentStep++;
-                    const nextStepElement = document.getElementById('step-' + currentStep);
-                    if (nextStepElement) {
-                        nextStepElement.classList.add('active');
-                    }
-                    updateProgress();
-                });
-            }
-        }
-
-        function prevStep() {
-            if (currentStep <= 1) return;
-
-            // Masquer l'étape actuelle
-            const currentStepElement = document.getElementById('step-' + currentStep);
-            if (currentStepElement) {
-                currentStepElement.classList.remove('active');
-            }
-
-            currentStep--;
-
-            // Afficher l'étape précédente
-            const prevStepElement = document.getElementById('step-' + currentStep);
-            if (prevStepElement) {
-                prevStepElement.classList.add('active');
-            }
-
-            updateProgress();
-        }
-
-        function validateStep1() {
-            const selectedContext = document.querySelector('input[name="contextType"]:checked');
-            if (!selectedContext) {
-                showNotification("Veuillez sélectionner un type de contexte");
-                return false;
-            }
-            return true;
-        }
-
-        function validateStep2() {
-            const description = document.getElementById('objectionDescription').value.trim();
-            if (!description) {
-                showNotification("Veuillez décrire votre situation");
-                return false;
-            }
-
-            const selectedTypes = document.querySelectorAll('input[name="objectionTypes"]:checked');
-            if (selectedTypes.length === 0) {
-                showNotification("Veuillez sélectionner au moins un type d'objection");
-                return false;
-            }
-
-            return true;
-        }
-
-        function saveStepData() {
-            // Sauvegarder les données de l'étape actuelle
-            switch (currentStep) {
-                case 1:
-                    const contextType = document.querySelector('input[name="contextType"]:checked');
-                    if (contextType) {
-                        formData.contextType = contextType.value;
-                        updateStep2Content();
-                    }
-                    break;
-                case 2:
-                    formData.objectionDescription = document.getElementById('objectionDescription').value;
-                    formData.objectionTypes = Array.from(document.querySelectorAll('input[name="objectionTypes"]:checked'))
-                        .map(cb => cb.value);
-                    const otherObjection = document.getElementById('otherObjection');
-                    if (otherObjection && otherObjection.value.trim()) {
-                        formData.otherObjection = otherObjection.value.trim();
-                    }
-                    break;
-                case 3:
-                    formData.channel = document.getElementById('channel').value;
-                    formData.phase = document.getElementById('phase').value;
-                    formData.prospectRole = document.getElementById('prospectRole').value;
-                    formData.prospectAuthority = document.getElementById('prospectAuthority').value;
-                    formData.prospectTemperature = document.getElementById('prospectTemperature').value;
-                    break;
-                case 4:
-                    if (formData.contextType === 'objection') {
-                        formData.responseDraft = document.getElementById('responseDraft').value;
-                        formData.strategies = Array.from(document.querySelectorAll('input[name="strategies"]:checked'))
-                            .map(cb => cb.value);
+                    // Configuration de la mascotte et du message
+                    if (stepNumber >= 1 && stepNumber <= 4 && stepMascottes[stepNumber]) {
+                        transitionMascotte.src = stepMascottes[stepNumber];
                     } else {
-                        formData.prospectionScript = document.getElementById('prospectionScript').value;
-                        const prospectionGoal = document.querySelector('input[name="prospectionGoal"]:checked');
-                        if (prospectionGoal) {
-                            formData.prospectionGoal = prospectionGoal.value;
+                        transitionMascotte.src = "mascotte_finale.png"; // Mascotte finale pour l'étape 5
+                    }
+
+                    if (transitionMessages[stepNumber]) {
+                        transitionMessage.textContent = transitionMessages[stepNumber];
+                    } else {
+                        transitionMessage.textContent = "Préparation de votre prompt final...";
+                    }
+
+                    // Affichage de l'écran de transition
+                    transitionScreen.classList.add('show');
+
+                    // Masquer après 2.5 secondes et exécuter le callback
+                    setTimeout(function () {
+                        transitionScreen.classList.remove('show');
+                        if (callback) callback();
+                    }, 2500);
+                }
+
+                // Fonction pour afficher l'écran de chargement
+                function showLoadingScreen(callback) {
+                    const loadingScreen = document.getElementById('loadingScreen');
+                    const progressBar = document.getElementById('progressBar');
+                    const loadingMessage = document.getElementById('loadingMessage');
+                    const loadingStatus = document.getElementById('loadingStatus');
+
+                    if (!loadingScreen || !progressBar || !loadingMessage || !loadingStatus) {
+                        if (callback) callback();
+                        return;
+                    }
+
+                    loadingScreen.classList.add('show');
+
+                    let progress = 0;
+                    let messageIndex = 0;
+
+                    const loadingInterval = setInterval(function () {
+                        progress += Math.random() * 15 + 5; // Progression aléatoire entre 5 et 20%
+
+                        if (progress >= 100) {
+                            progress = 100;
+                            clearInterval(loadingInterval);
+
+                            setTimeout(function () {
+                                loadingScreen.classList.remove('show');
+                                if (callback) callback();
+                            }, 500);
+                        }
+
+                        if (progressBar) {
+                            progressBar.style.width = progress + '%';
+                        }
+
+                        if (loadingStatus) {
+                            loadingStatus.textContent = Math.round(progress) + '%';
+                        }
+
+                        // Changer le message toutes les 2 progressions
+                        if (Math.round(progress) % 20 === 0 && messageIndex < loadingMessages.length - 1) {
+                            messageIndex++;
+                            if (loadingMessage) {
+                                loadingMessage.textContent = loadingMessages[messageIndex];
+                            }
+                        }
+                    }, 300);
+                }
+
+                // Mise à jour de la mascotte accompagnatrice
+                function updateCompanionMascotte() {
+                    const mascotte = document.getElementById('companionMascotte');
+                    if (!mascotte) return;
+
+                    if (currentStep >= 1 && currentStep <= 4 && stepMascottes[currentStep]) {
+                        mascotte.src = stepMascottes[currentStep];
+                        mascotte.style.display = 'block';
+                    } else {
+                        mascotte.style.display = 'none';
+                    }
+                }
+
+                function updateProgress() {
+                    // Calcul du pourcentage basé sur les étapes 1-5
+                    const percentage = currentStep <= 1 ? 0 : Math.round(((currentStep - 1) / (totalSteps - 1)) * 100);
+                    const progressPercentage = document.getElementById('progressPercentage');
+                    if (progressPercentage) {
+                        progressPercentage.textContent = percentage + '%';
+                    }
+
+                    // Mise à jour des étapes (les indices de progress-step correspondent maintenant aux étapes 1-5)
+                    const progressSteps = document.querySelectorAll('.progress-step');
+                    if (progressSteps) {
+                        progressSteps.forEach(function (step, index) {
+                            const stepNumber = index + 1; // Les étapes commencent à 1
+                            step.classList.remove('active', 'completed');
+                            if (stepNumber < currentStep) {
+                                step.classList.add('completed');
+                            } else if (stepNumber === currentStep) {
+                                step.classList.add('active');
+                            }
+                        });
+                    }
+
+                    // Mise à jour du label
+                    const progressLabel = document.getElementById('progressLabel');
+                    if (progressLabel && progressLabels[currentStep]) {
+                        progressLabel.textContent = progressLabels[currentStep];
+                    }
+
+                    updateCompanionMascotte(); // Mettre à jour la mascotte accompagnatrice
+                    updateSummary(); // Mettre à jour le résumé des choix
+                }
+
+                function nextStep() {
+                    // Validation avant de passer à l'étape suivante
+                    if (currentStep === 1 && !validateStep1()) return;
+                    if (currentStep === 2 && !validateStep2()) return;
+
+                    // Sauvegarder les données de l'étape actuelle
+                    saveStepData();
+
+                    // Masquer l'étape actuelle
+                    const currentStepElement = document.getElementById('step-' + currentStep);
+                    if (currentStepElement) {
+                        currentStepElement.classList.remove('active');
+                    }
+
+                    // Si on passe de l'étape 4 à 5, afficher l'écran de chargement
+                    if (currentStep === 4) {
+                        showLoadingScreen(function () {
+                            currentStep++;
+                            const nextStepElement = document.getElementById('step-' + currentStep);
+                            if (nextStepElement) {
+                                nextStepElement.classList.add('active');
+                            }
+                            updateProgress();
+                        });
+                    } else {
+                        // Pour les autres transitions, utiliser l'écran de transition normal
+                        showTransition(currentStep + 1, function () {
+                            currentStep++;
+                            const nextStepElement = document.getElementById('step-' + currentStep);
+                            if (nextStepElement) {
+                                nextStepElement.classList.add('active');
+                            }
+                            updateProgress();
+                        });
+                    }
+                }
+
+                function prevStep() {
+                    if (currentStep <= 1) return;
+
+                    // Masquer l'étape actuelle
+                    const currentStepElement = document.getElementById('step-' + currentStep);
+                    if (currentStepElement) {
+                        currentStepElement.classList.remove('active');
+                    }
+
+                    currentStep--;
+
+                    // Afficher l'étape précédente
+                    const prevStepElement = document.getElementById('step-' + currentStep);
+                    if (prevStepElement) {
+                        prevStepElement.classList.add('active');
+                    }
+
+                    updateProgress();
+                }
+
+                function validateStep1() {
+                    const selectedContext = document.querySelector('input[name="contextType"]:checked');
+                    if (!selectedContext) {
+                        showNotification("Veuillez sélectionner un type de contexte");
+                        return false;
+                    }
+                    return true;
+                }
+
+                function validateStep2() {
+                    const description = document.getElementById('objectionDescription').value.trim();
+                    if (!description) {
+                        showNotification("Veuillez décrire votre situation");
+                        return false;
+                    }
+
+                    const selectedTypes = document.querySelectorAll('input[name="objectionTypes"]:checked');
+                    if (selectedTypes.length === 0) {
+                        showNotification("Veuillez sélectionner au moins un type d'objection");
+                        return false;
+                    }
+
+                    return true;
+                }
+
+                function saveStepData() {
+                    // Sauvegarder les données de l'étape actuelle
+                    switch (currentStep) {
+                        case 1:
+                            const contextType = document.querySelector('input[name="contextType"]:checked');
+                            if (contextType) {
+                                formData.contextType = contextType.value;
+                                updateStep2Content();
+                            }
+                            break;
+                        case 2:
+                            formData.objectionDescription = document.getElementById('objectionDescription').value;
+                            formData.objectionTypes = Array.from(document.querySelectorAll('input[name="objectionTypes"]:checked'))
+                                .map(cb => cb.value);
+                            const otherObjection = document.getElementById('otherObjection');
+                            if (otherObjection && otherObjection.value.trim()) {
+                                formData.otherObjection = otherObjection.value.trim();
+                            }
+                            break;
+                        case 3:
+                            formData.channel = document.getElementById('channel').value;
+                            formData.phase = document.getElementById('phase').value;
+                            formData.prospectRole = document.getElementById('prospectRole').value;
+                            formData.prospectAuthority = document.getElementById('prospectAuthority').value;
+                            formData.prospectTemperature = document.getElementById('prospectTemperature').value;
+                            break;
+                        case 4:
+                            if (formData.contextType === 'objection') {
+                                formData.responseDraft = document.getElementById('responseDraft').value;
+                                formData.strategies = Array.from(document.querySelectorAll('input[name="strategies"]:checked'))
+                                    .map(cb => cb.value);
+                            } else {
+                                formData.prospectionScript = document.getElementById('prospectionScript').value;
+                                formData.prospectionGoals = Array.from(document.querySelectorAll('input[name="prospectionGoal"]:checked'))
+                                    .map(cb => cb.value);
+                            }
+                            break;
+                    }
+                }
+
+                function updateStep2Content() {
+                    const subtitle = document.getElementById('step2-subtitle');
+                    const label = document.getElementById('objectionDescriptionLabel');
+                    const placeholder = document.getElementById('objectionDescription');
+
+                    if (formData.contextType === 'objection') {
+                        if (subtitle) subtitle.textContent = "Décrivez l'objection que vous rencontrez et sélectionnez les types pertinents";
+                        if (label) label.textContent = "Quelles sont les objections auxquelles vous faites face ? :";
+                        if (placeholder) placeholder.placeholder = "Écrivez ici, l'objection (ou les objections) qu'on vous fait trop souvent, expliquez ce que vous essayez de dire avant, êtes vous a l'aise dans la conversation, collez ici une phrase-type de client...";
+                    } else {
+                        if (subtitle) subtitle.textContent = "Décrivez votre contexte de prospection et sélectionnez les types d'objections que vous retoutez";
+                        if (label) label.textContent = "Quel est votre contexte de prospection ?";
+                        if (placeholder) placeholder.placeholder = "Collez ici votre pitch, décrivez votre produit/service, vos cibles et pourquoi eux, quels sont vos avantages...";
+                    }
+                }
+
+                function updateStep4Content() {
+                    const title = document.getElementById('step4-title');
+                    const subtitle = document.getElementById('step4-subtitle');
+                    const objectionContent = document.getElementById('objectionPathContent');
+                    const prospectionContent = document.getElementById('prospectionPathContent');
+
+                    if (formData.contextType === 'objection') {
+                        if (title) title.textContent = "Votre stratégie de réponse";
+                        if (subtitle) subtitle.textContent = "Rédigez votre réponse et sélectionnez les stratégies à utiliser";
+                        if (objectionContent) objectionContent.style.display = 'block';
+                        if (prospectionContent) prospectionContent.style.display = 'none';
+                    } else {
+                        if (title) title.textContent = "Votre script de prospection";
+                        if (subtitle) subtitle.textContent = "Écrivez votre script et définissez votre objectif";
+                        if (objectionContent) objectionContent.style.display = 'none';
+                        if (prospectionContent) prospectionContent.style.display = 'block';
+                    }
+                }
+
+                function selectRadio(name, value) {
+                    // Désélectionner toutes les options du même groupe
+                    document.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
+                        radio.checked = false;
+                        radio.closest('.radio-option').classList.remove('selected');
+                    });
+
+                    // Sélectionner l'option choisie
+                    const selectedRadio = document.querySelector(`input[name="${name}"][value="${value}"]`);
+                    if (selectedRadio) {
+                        selectedRadio.checked = true;
+                        selectedRadio.closest('.radio-option').classList.add('selected');
+                    }
+
+                    // Gérer les champs conditionnels
+                    if (name === 'objectionType' && value === 'autre') {
+                        const otherField = document.getElementById('otherObjectionField');
+                        if (otherField) {
+                            otherField.classList.add('show');
+                        }
+                    } else if (name === 'objectionType') {
+                        const otherField = document.getElementById('otherObjectionField');
+                        if (otherField) {
+                            otherField.classList.remove('show');
                         }
                     }
-                    break;
-            }
-        }
-
-        function updateStep2Content() {
-            const subtitle = document.getElementById('step2-subtitle');
-            const label = document.getElementById('objectionDescriptionLabel');
-            const placeholder = document.getElementById('objectionDescription');
-
-            if (formData.contextType === 'objection') {
-                if (subtitle) subtitle.textContent = "Décrivez l'objection que vous rencontrez et sélectionnez les types pertinents";
-                if (label) label.textContent = "Quelles sont les objections auxquelles vous faites face ? :";
-                if (placeholder) placeholder.placeholder = "Écrivez ici, l'objection (ou les objections) qu'on vous fait trop souvent, expliquez ce que vous essayez de dire avant, êtes vous a l'aise dans la conversation, collez ici une phrase-type de client...";
-            } else {
-                if (subtitle) subtitle.textContent = "Décrivez votre contexte de prospection et sélectionnez les types d'objections que vous retoutez";
-                if (label) label.textContent = "Quel est votre contexte de prospection ?";
-                if (placeholder) placeholder.placeholder = "Collez ici votre pitch, décrivez votre produit/service, vos cibles et pourquoi eux, quels sont vos avantages...";
-            }
-        }
-
-        function updateStep4Content() {
-            const title = document.getElementById('step4-title');
-            const subtitle = document.getElementById('step4-subtitle');
-            const objectionContent = document.getElementById('objectionPathContent');
-            const prospectionContent = document.getElementById('prospectionPathContent');
-
-            if (formData.contextType === 'objection') {
-                if (title) title.textContent = "Votre stratégie de réponse";
-                if (subtitle) subtitle.textContent = "Rédigez votre réponse et sélectionnez les stratégies à utiliser";
-                if (objectionContent) objectionContent.style.display = 'block';
-                if (prospectionContent) prospectionContent.style.display = 'none';
-            } else {
-                if (title) title.textContent = "Votre script de prospection";
-                if (subtitle) subtitle.textContent = "Écrivez votre script et définissez votre objectif";
-                if (objectionContent) objectionContent.style.display = 'none';
-                if (prospectionContent) prospectionContent.style.display = 'block';
-            }
-        }
-
-        function selectRadio(name, value) {
-            // Désélectionner toutes les options du même groupe
-            document.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
-                radio.checked = false;
-                radio.closest('.radio-option').classList.remove('selected');
-            });
-
-            // Sélectionner l'option choisie
-            const selectedRadio = document.querySelector(`input[name="${name}"][value="${value}"]`);
-            if (selectedRadio) {
-                selectedRadio.checked = true;
-                selectedRadio.closest('.radio-option').classList.add('selected');
-            }
-
-            // Gérer les champs conditionnels
-            if (name === 'objectionType' && value === 'autre') {
-                const otherField = document.getElementById('otherObjectionField');
-                if (otherField) {
-                    otherField.classList.add('show');
                 }
-            } else if (name === 'objectionType') {
-                const otherField = document.getElementById('otherObjectionField');
-                if (otherField) {
-                    otherField.classList.remove('show');
+
+                function toggleCheckbox(name, value) {
+                    const checkbox = document.querySelector(`input[name="${name}"][value="${value}"]`);
+                    if (checkbox) {
+                        checkbox.checked = !checkbox.checked;
+                        const option = checkbox.closest('.checkbox-option');
+                        if (checkbox.checked) {
+                            option.classList.add('selected');
+                        } else {
+                            option.classList.remove('selected');
+                        }
+                    }
+
+                    // Gérer l'affichage du champ "autre" pour les types d'objection
+                    if (name === 'objectionTypes') {
+                        const otherField = document.getElementById('otherObjectionField');
+                        const selectedTypes = document.querySelectorAll('input[name="objectionTypes"]:checked');
+                        if (selectedTypes.length === 0) {
+                            showNotification("Sélectionnez au moins un type d'objection");
+                            checkbox.checked = true;
+                            checkbox.closest('.checkbox-option').classList.add('selected');
+                        }
+                    }
                 }
-            }
-        }
 
-        function toggleCheckbox(name, value) {
-            const checkbox = document.querySelector(`input[name="${name}"][value="${value}"]`);
-            if (checkbox) {
-                checkbox.checked = !checkbox.checked;
-                const option = checkbox.closest('.checkbox-option');
-                if (checkbox.checked) {
-                    option.classList.add('selected');
-                } else {
-                    option.classList.remove('selected');
+                function generatePrompt() {
+                    // Sauvegarder les données de l'étape 4
+                    saveStepData();
+
+                    // Valider les champs requis pour l'étape 4
+                    if (formData.contextType === 'objection') {
+                        if (!formData.responseDraft || formData.responseDraft.trim() === '') {
+                            showNotification("Veuillez rédiger votre réponse");
+                            return;
+                        }
+                        if (!formData.strategies || formData.strategies.length === 0) {
+                            showNotification("Veuillez sélectionner au moins une stratégie");
+                            return;
+                        }
+                    } else {
+                        if (!formData.prospectionScript || formData.prospectionScript.trim() === '') {
+                            showNotification("Veuillez écrire votre script de prospection");
+                            return;
+                        }
+                        if (!formData.prospectionGoals || formData.prospectionGoals.length === 0) {
+                            showNotification("Veuillez sélectionner au moins un objectif principal");
+                            return;
+                        }
+                    }
+
+                    // Générer le prompt en fonction du contexte
+                    let prompt = "";
+
+                    if (formData.contextType === 'objection') {
+                        prompt = generateObjectionPrompt();
+                    } else {
+                        prompt = generateProspectionPrompt();
+                    }
+
+                    // Afficher le prompt généré
+                    const promptElement = document.getElementById('generated-prompt');
+                    if (promptElement) {
+                        promptElement.textContent = prompt;
+                    }
+
+                    // Passer à l'étape 5
+                    nextStep();
                 }
-            }
 
-            // Gérer l'affichage du champ "autre" pour les types d'objection
-            if (name === 'objectionTypes') {
-                const otherField = document.getElementById('otherObjectionField');
-                const selectedTypes = document.querySelectorAll('input[name="objectionTypes"]:checked');
-                if (selectedTypes.length === 0) {
-                    showNotification("Sélectionnez au moins un type d'objection");
-                    checkbox.checked = true;
-                    checkbox.closest('.checkbox-option').classList.add('selected');
-                }
-            }
-        }
+                function generateObjectionPrompt() {
+                    const objectionTypeLabels = {
+                        'prix': 'Prix/coût',
+                        'delai': 'Délai/temps',
+                        'confiance': 'Manque de confiance',
+                        'besoin': 'Besoin flou',
+                        'autorite': 'Manque d\'autorité',
+                        'urgence': 'Absence d\'urgence'
+                    };
 
-        function generatePrompt() {
-            // Sauvegarder les données de l'étape 4
-            saveStepData();
+                    const strategyLabels = {
+                        'desamorcer': 'Désamorcer calmement',
+                        'reformuler': 'Reformuler pour comprendre',
+                        'contre-argumenter': 'Contre-argumenter',
+                        'diagnostiquer': 'Diagnostiquer la cause racine',
+                        'relational': 'Renforcer la relation',
+                        'urgent': 'Créer un sentiment d\'urgence'
+                    };
 
-            // Valider les champs requis pour l'étape 4
-            if (formData.contextType === 'objection') {
-                if (!formData.responseDraft || formData.responseDraft.trim() === '') {
-                    showNotification("Veuillez rédiger votre réponse");
-                    return;
-                }
-                if (!formData.strategies || formData.strategies.length === 0) {
-                    showNotification("Veuillez sélectionner au moins une stratégie");
-                    return;
-                }
-            } else {
-                if (!formData.prospectionScript || formData.prospectionScript.trim() === '') {
-                    showNotification("Veuillez écrire votre script de prospection");
-                    return;
-                }
-                if (!formData.prospectionGoal) {
-                    showNotification("Veuillez sélectionner votre objectif principal");
-                    return;
-                }
-            }
+                    const selectedTypes = formData.objectionTypes.map(type => objectionTypeLabels[type] || type).join(', ');
+                    const selectedStrategies = formData.strategies.map(strategy => strategyLabels[strategy] || strategy).join(', ');
 
-            // Générer le prompt en fonction du contexte
-            let prompt = "";
-
-            if (formData.contextType === 'objection') {
-                prompt = generateObjectionPrompt();
-            } else {
-                prompt = generateProspectionPrompt();
-            }
-
-            // Afficher le prompt généré
-            const promptElement = document.getElementById('generated-prompt');
-            if (promptElement) {
-                promptElement.textContent = prompt;
-            }
-
-            // Passer à l'étape 5
-            nextStep();
-        }
-
-        function generateObjectionPrompt() {
-            const objectionTypeLabels = {
-                'prix': 'Prix/coût',
-                'delai': 'Délai/temps',
-                'confiance': 'Manque de confiance',
-                'besoin': 'Besoin flou',
-                'autorite': 'Manque d\'autorité',
-                'urgence': 'Absence d\'urgence'
-            };
-
-            const strategyLabels = {
-                'desamorcer': 'Désamorcer calmement',
-                'reformuler': 'Reformuler pour comprendre',
-                'contre-argumenter': 'Contre-argumenter',
-                'diagnostiquer': 'Diagnostiquer la cause racine',
-                'relational': 'Renforcer la relation',
-                'urgent': 'Créer un sentiment d\'urgence'
-            };
-
-            const selectedTypes = formData.objectionTypes.map(type => objectionTypeLabels[type] || type).join(', ');
-            const selectedStrategies = formData.strategies.map(strategy => strategyLabels[strategy] || strategy).join(', ');
-
-            let prompt = `Tu es un expert en traitement des objections commerciales avec une maîtrise approfondie des techniques de vente, de la psychologie client et des stratégies de persuasion.
+                    let prompt = `Tu es un expert en traitement des objections commerciales avec une maîtrise approfondie des techniques de vente, de la psychologie client et des stratégies de persuasion.
 
 CONTEXTE DE L'OBJECTION :
 - Type d'objection(s) : ${selectedTypes}${formData.otherObjection ? ', ' + formData.otherObjection : ''}
@@ -1768,30 +1761,32 @@ Agis comme un coach expert en vente. Analyse mon objection et mon objectif actue
 
 Format de réponse : Sois direct, pratique et actionnable. Utilise des exemples concrets et un langage clair. Structure ta réponse avec des en-têtes clairs et des listes à puces pour une lecture facile.`;
 
-            return prompt;
-        }
+                    return prompt;
+                }
 
-        function generateProspectionPrompt() {
-            const goalLabels = {
-                'rdv': 'Obtenir un rendez-vous',
-                'info': 'Fournir des informations',
-                'demo': 'Obtenir une démonstration',
-                'vente': 'Conclure une vente directe'
-            };
+                function generateProspectionPrompt() {
+                    const goalLabels = {
+                        'rdv': 'Obtenir un rendez-vous',
+                        'info': 'Fournir des informations',
+                        'demo': 'Obtenir une démonstration',
+                        'vente': 'Conclure une vente directe'
+                    };
 
-            const objectionTypeLabels = {
-                'prix': 'Prix/coût',
-                'delai': 'Délai/temps',
-                'confiance': 'Manque de confiance',
-                'besoin': 'Besoin flou',
-                'autorite': 'Manque d\'autorité',
-                'urgence': 'Absence d\'urgence'
-            };
+                    const objectionTypeLabels = {
+                        'prix': 'Prix/coût',
+                        'delai': 'Délai/temps',
+                        'confiance': 'Manque de confiance',
+                        'besoin': 'Besoin flou',
+                        'autorite': 'Manque d\'autorité',
+                        'urgence': 'Absence d\'urgence'
+                    };
 
-            const selectedTypes = formData.objectionTypes.map(type => objectionTypeLabels[type] || type).join(', ');
-            const goalText = goalLabels[formData.prospectionGoal] || formData.prospectionGoal;
+                    const selectedTypes = formData.objectionTypes.map(type => objectionTypeLabels[type] || type).join(', ');
+                    const goalText = formData.prospectionGoals && formData.prospectionGoals.length > 0
+                        ? formData.prospectionGoals.map(g => goalLabels[g] || g).join(', ')
+                        : '';
 
-            let prompt = `Tu es un expert en prospection commerciale et en anticipation des objections. Tu maîtrises les techniques de vente, la psychologie client et l'analyse critique des scripts commerciaux.
+                    let prompt = `Tu es un expert en prospection commerciale et en anticipation des objections. Tu maîtrises les techniques de vente, la psychologie client et l'analyse critique des scripts commerciaux.
 
 CONTEXTE DE PROSPECTION :
 - Types d'objections à anticiper : ${selectedTypes}${formData.otherObjection ? ', ' + formData.otherObjection : ''}
@@ -1847,201 +1842,202 @@ Agis comme un expert en prospection. Analyse mon script et mon contexte, puis fo
 
 Format de réponse : Sois critique mais constructif. Utilise des exemples précis tirés de mon script. Propose des alternatives concrètes et justifie tes recommandations avec des principes de persuasion éprouvés.`;
 
-            return prompt;
-        }
-
-        function copyPrompt() {
-            const promptText = document.getElementById('generated-prompt').textContent;
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(promptText).then(function () {
-                    showCopySuccess();
-                }).catch(function () {
-                    fallbackCopy(promptText);
-                });
-            } else {
-                fallbackCopy(promptText);
-            }
-        }
-
-        function fallbackCopy(text) {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            textarea.setAttribute('readonly', '');
-            textarea.style.position = 'absolute';
-            textarea.style.left = '-9999px';
-            document.body.appendChild(textarea);
-            textarea.select();
-            try {
-                document.execCommand('copy');
-                showCopySuccess();
-            } catch (err) {
-                showNotification("Erreur lors de la copie du prompt");
-            }
-            document.body.removeChild(textarea);
-        }
-
-        function showCopySuccess() {
-            const copyBtn = document.querySelector('.copy-btn');
-            if (copyBtn) {
-                copyBtn.textContent = '✅ Chargé !';
-                copyBtn.classList.add('copied');
-                setTimeout(function () {
-                    copyBtn.textContent = 'Charger configuration';
-                    copyBtn.classList.remove('copied');
-                }, 2000);
-            }
-        }
-
-        function restart() {
-            // Réinitialiser les données
-            formData = {};
-            currentStep = 1;
-
-            // Réinitialiser tous les formulaires
-            document.querySelectorAll('input, select, textarea').forEach(element => {
-                if (element.type === 'radio' || element.type === 'checkbox') {
-                    element.checked = false;
-                } else {
-                    element.value = '';
+                    return prompt;
                 }
-            });
 
-            // Réinitialiser les sélections visuelles
-            document.querySelectorAll('.radio-option, .checkbox-option').forEach(option => {
-                option.classList.remove('selected');
-            });
+                function copyPrompt() {
+                    const promptText = document.getElementById('generated-prompt').textContent;
+                    if (navigator.clipboard && window.isSecureContext) {
+                        navigator.clipboard.writeText(promptText).then(function () {
+                            showCopySuccess();
+                        }).catch(function () {
+                            fallbackCopy(promptText);
+                        });
+                    } else {
+                        fallbackCopy(promptText);
+                    }
+                }
 
-            // Masquer les champs conditionnels
-            document.querySelectorAll('.conditional-field').forEach(field => {
-                field.classList.remove('show');
-            });
+                function fallbackCopy(text) {
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    textarea.setAttribute('readonly', '');
+                    textarea.style.position = 'absolute';
+                    textarea.style.left = '-9999px';
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    try {
+                        document.execCommand('copy');
+                        showCopySuccess();
+                    } catch (err) {
+                        showNotification("Erreur lors de la copie du prompt");
+                    }
+                    document.body.removeChild(textarea);
+                }
 
-            // Revenir à l'étape 1
-            document.querySelectorAll('.step').forEach(step => {
-                step.classList.remove('active');
-            });
+                function showCopySuccess() {
+                    const copyBtn = document.querySelector('.copy-btn');
+                    if (copyBtn) {
+                        copyBtn.textContent = '✅ Chargé !';
+                        copyBtn.classList.add('copied');
+                        setTimeout(function () {
+                            copyBtn.textContent = 'Charger configuration';
+                            copyBtn.classList.remove('copied');
+                        }, 2000);
+                    }
+                }
 
-            const step1 = document.getElementById('step-1');
-            if (step1) {
-                step1.classList.add('active');
-            }
+                function restart() {
+                    // Réinitialiser les données
+                    formData = {};
+                    currentStep = 1;
 
-            updateProgress();
-        }
+                    // Réinitialiser tous les formulaires
+                    document.querySelectorAll('input, select, textarea').forEach(element => {
+                        if (element.type === 'radio' || element.type === 'checkbox') {
+                            element.checked = false;
+                        } else {
+                            element.value = '';
+                        }
+                    });
 
-        function updateSummary() {
-            const summaryContent = document.getElementById('summary-content');
-            if (!summaryContent) return;
+                    // Réinitialiser les sélections visuelles
+                    document.querySelectorAll('.radio-option, .checkbox-option').forEach(option => {
+                        option.classList.remove('selected');
+                    });
 
-            let summaryHTML = '<div style="display: grid; gap: 10px;">';
+                    // Masquer les champs conditionnels
+                    document.querySelectorAll('.conditional-field').forEach(field => {
+                        field.classList.remove('show');
+                    });
 
-            // Étape 1
-            if (formData.contextType) {
-                summaryHTML += `
+                    // Revenir à l'étape 1
+                    document.querySelectorAll('.step').forEach(step => {
+                        step.classList.remove('active');
+                    });
+
+                    const step1 = document.getElementById('step-1');
+                    if (step1) {
+                        step1.classList.add('active');
+                    }
+
+                    updateProgress();
+                }
+
+                function updateSummary() {
+                    const summaryContent = document.getElementById('summary-content');
+                    if (!summaryContent) return;
+
+                    let summaryHTML = '<div style="display: grid; gap: 10px;">';
+
+                    // Étape 1
+                    if (formData.contextType) {
+                        summaryHTML += `
                     <div style="padding: 8px; background: rgba(0, 150, 136, 0.1); border-radius: 6px;">
                         <strong>Contexte :</strong> ${formData.contextType === 'objection' ? 'Objection actuelle' : 'Préparation de prospection'}
                     </div>
                 `;
-            }
+                    }
 
-            // Étape 2
-            if (formData.objectionDescription) {
-                summaryHTML += `
+                    // Étape 2
+                    if (formData.objectionDescription) {
+                        summaryHTML += `
                     <div style="padding: 8px; background: rgba(0, 150, 136, 0.1); border-radius: 6px;">
                         <strong>Description :</strong> ${formData.objectionDescription.substring(0, 100)}${formData.objectionDescription.length > 100 ? '...' : ''}
                     </div>
                 `;
-            }
+                    }
 
-            if (formData.objectionTypes && formData.objectionTypes.length > 0) {
-                const typeLabels = {
-                    'prix': 'Prix',
-                    'delai': 'Délai',
-                    'confiance': 'Confiance',
-                    'besoin': 'Besoin',
-                    'autorite': 'Autorité',
-                    'urgence': 'Urgence'
-                };
-                const typesText = formData.objectionTypes.map(type => typeLabels[type] || type).join(', ');
-                summaryHTML += `
+                    if (formData.objectionTypes && formData.objectionTypes.length > 0) {
+                        const typeLabels = {
+                            'prix': 'Prix',
+                            'delai': 'Délai',
+                            'confiance': 'Confiance',
+                            'besoin': 'Besoin',
+                            'autorite': 'Autorité',
+                            'urgence': 'Urgence'
+                        };
+                        const typesText = formData.objectionTypes.map(type => typeLabels[type] || type).join(', ');
+                        summaryHTML += `
                     <div style="padding: 8px; background: rgba(0, 150, 136, 0.1); border-radius: 6px;">
                         <strong>Types d'objections :</strong> ${typesText}
                     </div>
                 `;
-            }
+                    }
 
-            // Étape 3
-            if (formData.channel) {
-                summaryHTML += `
+                    // Étape 3
+                    if (formData.channel) {
+                        summaryHTML += `
                     <div style="padding: 8px; background: rgba(0, 150, 136, 0.1); border-radius: 6px;">
                         <strong>Canal :</strong> ${formData.channel}
                     </div>
                 `;
-            }
+                    }
 
-            if (formData.phase) {
-                summaryHTML += `
+                    if (formData.phase) {
+                        summaryHTML += `
                     <div style="padding: 8px; background: rgba(0, 150, 136, 0.1); border-radius: 6px;">
                         <strong>Phase :</strong> ${formData.phase}
                     </div>
                 `;
-            }
+                    }
 
-            // Étape 4
-            if (formData.contextType === 'objection' && formData.strategies) {
-                const strategyLabels = {
-                    'desamorcer': 'Désamorcer',
-                    'reformuler': 'Reformuler',
-                    'contre-argumenter': 'Contre-argumenter',
-                    'diagnostiquer': 'Diagnostiquer',
-                    'relational': 'Relation',
-                    'urgent': 'Urgence'
-                };
-                const strategiesText = formData.strategies.map(strategy => strategyLabels[strategy] || strategy).join(', ');
-                summaryHTML += `
+                    // Étape 4
+                    if (formData.contextType === 'objection' && formData.strategies) {
+                        const strategyLabels = {
+                            'desamorcer': 'Désamorcer',
+                            'reformuler': 'Reformuler',
+                            'contre-argumenter': 'Contre-argumenter',
+                            'diagnostiquer': 'Diagnostiquer',
+                            'relational': 'Relation',
+                            'urgent': 'Urgence'
+                        };
+                        const strategiesText = formData.strategies.map(strategy => strategyLabels[strategy] || strategy).join(', ');
+                        summaryHTML += `
                     <div style="padding: 8px; background: rgba(0, 150, 136, 0.1); border-radius: 6px;">
                         <strong>Stratégies :</strong> ${strategiesText}
                     </div>
                 `;
-            } else if (formData.contextType === 'prospection' && formData.prospectionGoal) {
-                const goalLabels = {
-                    'rdv': 'Rendez-vous',
-                    'info': 'Informations',
-                    'demo': 'Démonstration',
-                    'vente': 'Vente directe'
-                };
-                summaryHTML += `
-                    <div style="padding: 8px; background: rgba(0, 150, 136, 0.1); border-radius: 6px;">
-                        <strong>Objectif :</strong> ${goalLabels[formData.prospectionGoal] || formData.prospectionGoal}
-                    </div>
-                `;
-            }
+                    } else if (formData.contextType === 'prospection' && formData.prospectionGoals && formData.prospectionGoals.length > 0) {
+                        const goalLabels = {
+                            'rdv': 'Rendez-vous',
+                            'info': 'Informations',
+                            'demo': 'Démonstration',
+                            'vente': 'Vente directe'
+                        };
+                        const goalsText = formData.prospectionGoals.map(g => goalLabels[g] || g).join(', ');
+                        summaryHTML += `
+        <div style="padding: 8px; background: rgba(0, 150, 136, 0.1); border-radius: 6px;">
+            <strong>Objectifs :</strong> ${goalsText}
+        </div>
+    `;
+                    }
 
-            summaryHTML += '</div>';
-            summaryContent.innerHTML = summaryHTML;
-        }
+                    summaryHTML += '</div>';
+                    summaryContent.innerHTML = summaryHTML;
+                }
 
-        // Mettre à jour le contenu de l'étape 4 quand on y arrive
-        document.addEventListener('DOMContentLoaded', function () {
-            // Observer les changements d'étape pour mettre à jour le contenu de l'étape 4
-            const observer = new MutationObserver(function (mutations) {
-                mutations.forEach(function (mutation) {
-                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                        const step4 = document.getElementById('step-4');
-                        if (step4 && step4.classList.contains('active')) {
-                            updateStep4Content();
-                        }
+                // Mettre à jour le contenu de l'étape 4 quand on y arrive
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Observer les changements d'étape pour mettre à jour le contenu de l'étape 4
+                    const observer = new MutationObserver(function (mutations) {
+                        mutations.forEach(function (mutation) {
+                            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                                const step4 = document.getElementById('step-4');
+                                if (step4 && step4.classList.contains('active')) {
+                                    updateStep4Content();
+                                }
+                            }
+                        });
+                    });
+
+                    // Observer l'étape 4
+                    const step4 = document.getElementById('step-4');
+                    if (step4) {
+                        observer.observe(step4, { attributes: true });
                     }
                 });
-            });
-
-            // Observer l'étape 4
-            const step4 = document.getElementById('step-4');
-            if (step4) {
-                observer.observe(step4, { attributes: true });
-            }
-        });
-    </script>
+            </script>
 </body>
 
 </html>
