@@ -811,6 +811,20 @@
             position: relative;
             z-index: 1;
         }
+        @media (max-width: 600px) {
+    .btn-group {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+    .btn-group .btn {
+        min-width: 0;
+        width: 100%;
+        font-size: 1rem;
+        padding: 14px 0;
+        box-sizing: border-box;
+    }
+}
     </style>
 </head>
 
@@ -1830,23 +1844,47 @@ Format de réponse : Sois critique mais constructif. Utilise des exemples préci
             return prompt;
         }
 
-        function copyPrompt() {
-            const promptText = document.getElementById('generated-prompt').textContent;
-            navigator.clipboard.writeText(promptText).then(function () {
-                const copyBtn = document.querySelector('.copy-btn');
-                if (copyBtn) {
-                    copyBtn.textContent = '✅ Chargé !';
-                    copyBtn.classList.add('copied');
+function copyPrompt() {
+    const promptText = document.getElementById('generated-prompt').textContent;
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(promptText).then(function () {
+            showCopySuccess();
+        }).catch(function () {
+            fallbackCopy(promptText);
+        });
+    } else {
+        fallbackCopy(promptText);
+    }
+}
 
-                    setTimeout(function () {
-                        copyBtn.textContent = '📋 Copier le prompt';
-                        copyBtn.classList.remove('copied');
-                    }, 2000);
-                }
-            }).catch(function () {
-                showNotification("Erreur lors de la copie du prompt");
-            });
-        }
+function fallbackCopy(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'absolute';
+    textarea.style.left = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+        document.execCommand('copy');
+        showCopySuccess();
+    } catch (err) {
+        showNotification("Erreur lors de la copie du prompt");
+    }
+    document.body.removeChild(textarea);
+}
+
+function showCopySuccess() {
+    const copyBtn = document.querySelector('.copy-btn');
+    if (copyBtn) {
+        copyBtn.textContent = '✅ Chargé !';
+        copyBtn.classList.add('copied');
+        setTimeout(function () {
+            copyBtn.textContent = 'Charger configuration';
+            copyBtn.classList.remove('copied');
+        }, 2000);
+    }
+}
 
         function restart() {
             // Réinitialiser les données
