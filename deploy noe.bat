@@ -35,6 +35,6 @@ echo.
 echo =======================================
 echo ✅ Déploiement terminé !
 echo Vérifie sur GitHub Pages si activé :
-echo https://Aksl-Ushindi.github.io/no-objections-engine/
+echo https://Aksl-Ushindi.github.io/no_objections_engine/
 echo =======================================
 pause
