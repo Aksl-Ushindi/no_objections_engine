@@ -2,7 +2,7 @@
 REM === Script de push et déploiement du No Objections Engine ===
 
 REM Nom du dépôt distant GitHub (à personnaliser)
-set REPO_URL=https://github.com/aksl/no-objections-engine.git
+set REPO_URL=https://github.com/Aksl-Ushindi/no_objections_engine.git
 set BRANCH=main
 
 REM Aller dans le dossier du script
@@ -35,6 +35,6 @@ echo.
 echo =======================================
 echo ✅ Déploiement terminé !
 echo Vérifie sur GitHub Pages si activé :
-echo https://aksl.github.io/no-objections-engine/
+echo https://Aksl-Ushindi.github.io/no-objections-engine/
 echo =======================================
 pause
