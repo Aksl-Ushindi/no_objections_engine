@@ -8,12 +8,24 @@ set "REPO=no_objections_engine"
 set "BRANCH=main"
 REM -------------
 
-git init
-git branch -M %BRANCH%
-git remote remove origin >nul 2>&1
-git remote add origin https://github.com/%USER%/%REPO%.git
+REM Init Git si besoin
+if not exist .git (
+    git init
+    git branch -M %BRANCH%
+    git remote add origin https://github.com/%USER%/%REPO%.git
+) else (
+    git remote set-url origin https://github.com/%USER%/%REPO%.git
+)
+
+REM Tirer les changements distants avant de pousser
+git fetch origin %BRANCH%
+git pull origin %BRANCH% --rebase
+
+REM Ajouter les fichiers et commit
 git add .
 git commit -m "Update"
+
+REM Pousser vers GitHub
 git push -u origin %BRANCH%
 
 pause
